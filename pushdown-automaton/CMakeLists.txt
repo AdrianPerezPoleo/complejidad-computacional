@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(
     pushdown_automaton
     src/main.cc
+    src/transition_table.cc
 )
 
 target_link_libraries(
