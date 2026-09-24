@@ -16,17 +16,20 @@
 #include "../include/automaton_configuration.h"
 #include "../include/tape.h"
 #include "../include/automaton_stack.h"
+#include "../include/state_manager.h"
 
 int main() {
   Alphabet tape_alphabet({'a', 'b'});
   Alphabet stack_alphabet({'0', '1', 'Z'});
   Symbol initial_stack_symbol = 'Z';
+  std::set<State> possible_states = {"q0", "q1", "qf"};
+  State initial_state = "q0";
 
   AutomatonConfiguration configuration{
-      {"q0", "q1", "qf"},
+      possible_states,
       tape_alphabet,
       stack_alphabet,
-      "q0",
+      initial_state,
       initial_stack_symbol,
       TransitionTable({
           {"q0", "1", "q0", "a", "Z"},
@@ -55,6 +58,15 @@ int main() {
   std::cout << stack.Top() << std::endl;
   stack.Push("Z10");
   std::cout << stack.Top() << std::endl;
+
+  StateManager state_manager(initial_state, possible_states);
+  std::cout << state_manager.GetCurrentState() << std::endl;
+
+  state_manager.ChangeToState("qf");
+  std::cout << state_manager.GetCurrentState() << std::endl;
+
+  state_manager.ChangeToState("rt");
+  std::cout << state_manager.GetCurrentState() << std::endl;
 
   return 0;
 }
