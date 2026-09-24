@@ -15,19 +15,23 @@
 
 #include "../include/automaton_configuration.h"
 #include "../include/tape.h"
+#include "../include/automaton_stack.h"
 
 int main() {
   Alphabet tape_alphabet({'a', 'b'});
+  Alphabet stack_alphabet({'0', '1', 'Z'});
+  Symbol initial_stack_symbol = 'Z';
+
   AutomatonConfiguration configuration{
       {"q0", "q1", "qf"},
       tape_alphabet,
-      Alphabet({'0', '1', 'Z'}),
+      stack_alphabet,
       "q0",
-      'Z',
+      initial_stack_symbol,
       TransitionTable({
           {"q0", "1", "q0", "a", "Z"},
           {"q0", "010", "q1", "b", "1"},
-          {"q1", "100", "qf", "b", "0"},
+          {"q1", "100", "qf", "b", "0Z"},
       })};
 
   std::cout << "Pushdown Automaton Configuration" << std::endl;
@@ -45,6 +49,12 @@ int main() {
 
   Tape tape({'a', 'a', 'a'}, tape_alphabet);
   std::cout << "Tape: " << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << std::endl;
+
+  AutomatonStack stack(initial_stack_symbol, stack_alphabet);
+  stack.Push('0');
+  std::cout << stack.Top() << std::endl;
+  stack.Push("Z10");
+  std::cout << stack.Top() << std::endl;
 
   return 0;
 }
