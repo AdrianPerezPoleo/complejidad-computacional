@@ -20,16 +20,17 @@
 #include <vector>
 
 using Symbol = char;
+using Symbols = std::string;
 using State = std::string;
 
 class TransitionTable {
  public:
   TransitionTable(const std::vector<std::vector<std::string>>& table_data_) { InitializeTable(table_data_); }
 
-  std::pair<State, Symbol> GetTransition(State, Symbol, Symbol) const;
+  std::pair<State, Symbols> GetTransition(State, Symbol, Symbol) const;
   void PrintTransitions() const;
  private:
-  std::map<std::tuple<State, Symbol, Symbol>, std::pair<State, Symbol>> transition_table_;
+  std::map<std::tuple<State, Symbol, Symbol>, std::pair<State, Symbols>> transition_table_;
 
   void InitializeTable(const std::vector<std::vector<std::string>>& table_data_);
 };

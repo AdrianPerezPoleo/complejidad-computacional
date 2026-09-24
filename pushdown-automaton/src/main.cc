@@ -14,18 +14,20 @@
 #include <vector>
 
 #include "../include/automaton_configuration.h"
+#include "../include/tape.h"
 
 int main() {
+  Alphabet tape_alphabet({'a', 'b'});
   AutomatonConfiguration configuration{
       {"q0", "q1", "qf"},
-      Alphabet({'a', 'b'}),
+      tape_alphabet,
       Alphabet({'0', '1', 'Z'}),
       "q0",
       'Z',
       TransitionTable({
           {"q0", "1", "q0", "a", "Z"},
-          {"q0", "0", "q1", "b", "1"},
-          {"q1", "1", "qf", "b", "0"},
+          {"q0", "010", "q1", "b", "1"},
+          {"q1", "100", "qf", "b", "0"},
       })};
 
   std::cout << "Pushdown Automaton Configuration" << std::endl;
@@ -40,6 +42,9 @@ int main() {
 
   std::cout << "Transition table:" << std::endl;
   configuration.transition_table.PrintTransitions();
+
+  Tape tape({'a', 'a', 'a'}, tape_alphabet);
+  std::cout << "Tape: " << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << std::endl;
 
   return 0;
 }

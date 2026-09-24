@@ -9,6 +9,7 @@ add_executable(
     pushdown_automaton
     src/main.cc
     src/transition_table.cc
+    src/tape.cc
 )
 
 target_link_libraries(
