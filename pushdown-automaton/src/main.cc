@@ -50,7 +50,8 @@ int main() {
   std::cout << "Transition table:" << std::endl;
   configuration.transition_table.PrintTransitions();
 
-  Tape tape({'a', 'a', 'a'}, tape_alphabet);
+  Tape tape(tape_alphabet);
+  tape.IntroduceString({'a', 'a', 'a'});
   std::cout << "Tape: " << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << std::endl;
 
   AutomatonStack stack(initial_stack_symbol, stack_alphabet);

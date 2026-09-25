@@ -17,14 +17,17 @@
 
 class Tape {
  public:
-  Tape(const std::vector<Symbol> tape, const Alphabet& tape_alphabet);
+  Tape(const Alphabet& tape_alphabet) : alphabet_{tape_alphabet} { }
 
-  Symbol GetNextSymbol();  // Comprobar si hay un símbolo que devolver a continuación o si ya se acabó la lectura
+  void IntroduceString(const std::vector<Symbol>& new_string);
+  Symbol GetNextSymbol();
  private:
   std::vector<Symbol> tape_;
   int head_;
 
-  bool IsValid(const std::vector<Symbol>& tape, const Alphabet& alphabet) const;
+  Alphabet alphabet_;
+
+  bool IsValid(const std::vector<Symbol>& tape) const;
   static constexpr Symbol kEmptySymbol = '.';
 };
 

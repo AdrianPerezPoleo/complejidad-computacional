@@ -13,19 +13,6 @@
 #include <iostream>
 #include "../include/tape.h"
 
-/**
- * @brief Construct a new Tape:: Tape object
- * 
- * @param tape Vector containing the symbols in the tape.
- * @param tape_alphabet Set of symbols the tape can have.
- */
-Tape::Tape(const std::vector<Symbol> tape, const Alphabet& tape_alphabet) : head_{0} {
-  if (this->IsValid(tape, tape_alphabet)) {
-    tape_ = tape;
-  } else {
-    // Lanzar un error
-  }
-}
 
 /**
  * @brief Checks if the symbols in the tape are valid.
@@ -35,11 +22,19 @@ Tape::Tape(const std::vector<Symbol> tape, const Alphabet& tape_alphabet) : head
  * @return true if the tape is valid.
  * @return false otherwise.
  */
-bool Tape::IsValid(const std::vector<Symbol>& tape, const Alphabet& alphabet) const {
+bool Tape::IsValid(const std::vector<Symbol>& tape) const {
   for (const auto& symbol : tape) {
-    if (!alphabet.ContainsSymbol(symbol)) return false;
+    if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }
   return true;
+}
+
+void Tape::IntroduceString(const std::vector<Symbol>& new_string) {
+  if (this->IsValid(new_string)) {
+    tape_ = new_string;
+  } else {
+    // Lanzar error de símbolo no válido en la cinta
+  }
 }
 
 /**
