@@ -21,10 +21,15 @@ int main() {
   AutomatonConfiguration configuration = reader.ReadConfiguration();
 
   PushdownAutomaton automaton(configuration);
-  if (automaton.Accepts({"aabb"})) {
-    std::cout << "Accepted" << std::endl;
-  } else {
-    std::cout << "Rejected" << std::endl;
+  while (true) {
+    std::cout << "Introduzca una cadena a procesar:\n";
+    std::string string_to_verify;
+    std::cin >> string_to_verify;
+    if (automaton.Accepts(string_to_verify)) {
+      std::cout << "\nAccepted" << std::endl; 
+    } else {
+      std::cout << "\nRejected" << std::endl;
+    }
   }
 
   return 0;
