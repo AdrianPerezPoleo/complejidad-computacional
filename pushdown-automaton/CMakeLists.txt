@@ -11,6 +11,7 @@ add_executable(
     src/transition_table.cc
     src/tape.cc
     src/pushdown_automaton.cc
+    src/automaton_configuration_reader.cc
 )
 
 target_link_libraries(

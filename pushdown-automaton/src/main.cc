@@ -13,44 +13,15 @@
 #include <set>
 #include <vector>
 
-#include "../include/automaton_configuration.h"
-#include "../include/tape.h"
-#include "../include/automaton_stack.h"
-#include "../include/state_manager.h"
+#include "../include/automaton_configuration_reader.h"
 #include "../include/pushdown_automaton.h"
 
 int main() {
-  std::set<State> possible_states = {"q1", "q2"};
-  Alphabet tape_alphabet({'a', 'b'});
-  Alphabet stack_alphabet({'S', 'A'});
-  State initial_state = "q1";
-  Symbol initial_stack_symbol = 'S';
-
-  AutomatonConfiguration configuration{
-      possible_states,
-      tape_alphabet,
-      stack_alphabet,
-      initial_state,
-      initial_stack_symbol,
-      TransitionTable({
-          {"q1", "a", "S", "q1", "A"},
-          {"q1", "a", "A", "q1", "AA"},
-          {"q1", "b", "A", "q2", "."},
-          {"q2", "b", "A", "q2", "."}
-      })};
-
-  std::cout << "Pushdown Automaton Configuration" << std::endl;
-  std::cout << "Initial state: " << configuration.initial_state << std::endl;
-  std::cout << "Initial stack symbol: " << configuration.initial_stack_symbol
-            << std::endl;
-  std::cout << "States: ";
-  for (const auto& state : configuration.automaton_states) {
-    std::cout << state << ' ';
-  }
-  std::cout << std::endl;
+  AutomatonConfigurationReader reader("../examples/configuration-3.txt");
+  AutomatonConfiguration configuration = reader.ReadConfiguration();
 
   PushdownAutomaton automaton(configuration);
-  if (automaton.Accepts({"aaabb"})) {
+  if (automaton.Accepts({"aabb"})) {
     std::cout << "Accepted" << std::endl;
   } else {
     std::cout << "Rejected" << std::endl;

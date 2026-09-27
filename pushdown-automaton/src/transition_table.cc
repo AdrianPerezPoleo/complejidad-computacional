@@ -46,11 +46,25 @@ std::vector<Transition> TransitionTable::GetTransitions(State current_state, Sym
  * @param table_data_ Data of the productions to be stored.
  */
 void TransitionTable::InitializeTable(const std::vector<std::vector<std::string>>& table_data_) {
+  int transition_id = 1;
   for (const auto& production_data : table_data_ ) {
     // Revisar que el tamaño es correcto (5) o mejorar esa estructura de datoscon una clase Transition
     TransitionAntecedent antecedent{production_data[0], production_data[1].front(), production_data[2].front()};
-    TransitionConsequent consequent{production_data[3], production_data[4]};
+    TransitionConsequent consequent{transition_id++, production_data[3], production_data[4]};
     this->transition_table_[antecedent].emplace_back(consequent);
   }
 }
 
+void TransitionTable::PrintTransitions() const {
+  for (const auto& [antecedent, consequents] : this->transition_table_) {
+    for (const auto& consequent : consequents) {
+      std::cout << consequent.identifier << ": (" 
+                << antecedent.current_state << ", " 
+                << antecedent.current_tape_symbol << ", " 
+                << antecedent.current_stack_symbol << ") -> (" 
+                << consequent.next_state << ", " 
+                << consequent.symbols_to_push << ")" 
+                << std::endl;
+    }
+  }
+}

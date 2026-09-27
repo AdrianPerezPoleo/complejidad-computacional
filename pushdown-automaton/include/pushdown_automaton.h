@@ -12,7 +12,7 @@
 #ifndef PUSHDOWN_AUTOMATON
 #define PUSHDOWN_AUTOMATON
 
-#include "automaton_configuration.h"
+#include "automaton_configuration_reader.h"
 #include "automaton_stack.h"
 #include "tape.h"
 #include "state_manager.h"

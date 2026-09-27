@@ -35,6 +35,7 @@ struct TransitionAntecedent {
 };
 
 struct TransitionConsequent {
+  int identifier;
   State next_state;
   Symbols symbols_to_push;
 };

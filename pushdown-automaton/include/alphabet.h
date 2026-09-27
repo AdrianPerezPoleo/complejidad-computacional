@@ -18,11 +18,16 @@ using Symbol = char;
 
 class Alphabet {
  public:
-  Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} { }
+  Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} {
+    if (alphabet_.count(this->kEmptySymbol) > 0) {
+      throw std::invalid_argument("Error en el alfabeto: El símbolo " + kEmptySymbol + std::string(" no puede formar parte de un alfabeto."));
+    }
+   }
 
   bool ContainsSymbol(const Symbol& symbol) const { return this->alphabet_.find(symbol) != this->alphabet_.end(); }
  private:
   std::set<Symbol> alphabet_;
+  static constexpr Symbol kEmptySymbol = '.';
 };
 
 #endif

@@ -19,6 +19,7 @@
  * @return false otherwise.
  */
 bool PushdownAutomaton::Accepts(const std::string& new_string) {
+  transition_table_.PrintTransitions();
   this->Restart();
   Tape tape(this->tape_);
   tape.IntroduceString(new_string);
@@ -32,7 +33,7 @@ bool PushdownAutomaton::CanAccept(const State& current_state,
                                   const AutomatonStack& current_stack) {
   std::cout << "State: " << current_state << "\t|Tape: "; 
   current_tape.PrintSymbolsLeft(std::cout) << "\t| Stack: "; 
-  current_stack.PrintContent(std::cout) << std::endl;
+  current_stack.PrintContent(std::cout) << "\t  | Available Transitions: ";
   if (!current_tape.HasSymbolsToRead() && current_stack.IsEmpty()) return true;
   if (current_stack.IsEmpty()) return false;
 
@@ -41,6 +42,10 @@ bool PushdownAutomaton::CanAccept(const State& current_state,
 
   const auto& possible_transitions = this->transition_table_.GetTransitions(current_state, tape_symbol, current_stack_symbol);
  
+  for (const auto& transition : possible_transitions) {
+    std::cout << transition.consequent.identifier << " ";
+  }
+  std::cout << std::endl;
   for (const auto& transition : possible_transitions) {
     AutomatonStack new_stack = current_stack;
     new_stack.Pop();
