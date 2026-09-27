@@ -12,22 +12,39 @@
 #ifndef TAPE_H
 #define TAPE_H
 
+#include <iostream>
+#include <string>
 #include <vector>
 #include "alphabet.h"
 
 class Tape {
  public:
-  Tape(const Alphabet& tape_alphabet) : alphabet_{tape_alphabet} { }
+  Tape(const Alphabet& tape_alphabet) : alphabet_{tape_alphabet}, head_{0} { }
+  Tape(const Tape&) = default;
 
-  void IntroduceString(const std::vector<Symbol>& new_string);
-  Symbol GetNextSymbol();
+  void IntroduceString(const std::string& new_string);
+
+  Symbol GetNextSymbol() const;
+  void Advance() { ++head_; }
+  void Restart() { head_ = 0; tape_ = ""; }
+  bool HasSymbolsToRead() const  { return head_ < this->tape_.size(); }
+
+  std::ostream& PrintSymbolsLeft(std::ostream& os) const {
+    std::string symbols_left = "";
+    for (size_t i{head_}; i < tape_.size(); ++i) {
+      symbols_left += tape_[i];
+    }
+    if (symbols_left == "") symbols_left = "-";
+    os << symbols_left;
+    return os;
+  }
+
  private:
-  std::vector<Symbol> tape_;
-  int head_;
-
+  std::string tape_;
+  size_t head_;
   Alphabet alphabet_;
 
-  bool IsValid(const std::vector<Symbol>& tape) const;
+  bool IsValid(const std::string& tape) const;
   static constexpr Symbol kEmptySymbol = '.';
 };
 

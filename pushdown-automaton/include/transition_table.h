@@ -23,14 +23,35 @@ using Symbol = char;
 using Symbols = std::string;
 using State = std::string;
 
+struct TransitionAntecedent {
+  State current_state;
+  Symbol current_tape_symbol;
+  Symbol current_stack_symbol;
+
+  bool operator<(const TransitionAntecedent& other) const {
+    return std::tie(current_state, current_tape_symbol, current_stack_symbol) <
+           std::tie(other.current_state, other.current_tape_symbol, other.current_stack_symbol);
+  }
+};
+
+struct TransitionConsequent {
+  State next_state;
+  Symbols symbols_to_push;
+};
+
+struct Transition {
+  TransitionAntecedent antecedent;
+  TransitionConsequent consequent;
+};
+
 class TransitionTable {
  public:
   TransitionTable(const std::vector<std::vector<std::string>>& table_data_) { InitializeTable(table_data_); }
 
-  std::pair<State, Symbols> GetTransition(State, Symbol, Symbol) const;
+  std::vector<Transition> GetTransitions(State, Symbol, Symbol) const;
   void PrintTransitions() const;
  private:
-  std::map<std::tuple<State, Symbol, Symbol>, std::pair<State, Symbols>> transition_table_;
+  std::map<TransitionAntecedent, std::vector<TransitionConsequent>>transition_table_;
 
   void InitializeTable(const std::vector<std::vector<std::string>>& table_data_);
 };

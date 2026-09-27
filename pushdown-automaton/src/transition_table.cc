@@ -16,23 +16,28 @@
  * 
  * @return std::pair<State, Symbol> Transition to be made.
  */
-std::pair<State, Symbols> TransitionTable::GetTransition(State current_state, Symbol tape_symbol, Symbol stack_symbol) const {
-  std::tuple<State, Symbol, Symbol> search_index = {current_state, tape_symbol, stack_symbol};
-  try {
-    return this->transition_table_.at(search_index);
-  } catch (std::exception&) {
-    // Imprimir el error
-  }
-}
+std::vector<Transition> TransitionTable::GetTransitions(State current_state, Symbol tape_symbol, Symbol stack_symbol) const {
+  std::vector<Transition> possible_transitions;
 
-void TransitionTable::PrintTransitions() const {
-  for (const auto& [antecedent, consequent] : this->transition_table_) {
-    std::cout << "(" << std::get<0>(antecedent) << ", "
-              << std::get<1>(antecedent) << ", "
-              << std::get<2>(antecedent) << ") -> ("
-              << consequent.first << ", " << consequent.second << ")"
-              << std::endl;
+  if (tape_symbol != '.') {
+    TransitionAntecedent real_key{current_state, tape_symbol, stack_symbol};
+    auto it = this->transition_table_.find(real_key);
+    if (it != transition_table_.end()) {
+      for (const auto& consequent : it->second) {
+        possible_transitions.emplace_back(real_key, consequent);
+      }
+    }
   }
+
+  TransitionAntecedent epsilon_key{current_state, '.', stack_symbol};
+  auto it_epsilon = this->transition_table_.find(epsilon_key);
+  if (it_epsilon != this->transition_table_.end()) {
+    for (const auto& consequent : it_epsilon->second) {
+      possible_transitions.emplace_back(epsilon_key, consequent);
+    }
+  }
+
+  return possible_transitions;
 }
 
 /**
@@ -42,10 +47,10 @@ void TransitionTable::PrintTransitions() const {
  */
 void TransitionTable::InitializeTable(const std::vector<std::vector<std::string>>& table_data_) {
   for (const auto& production_data : table_data_ ) {
-    // Revisar que el tamaño es correcto (5) o mejorar esa estructura de datos
-    std::tuple<State, Symbol, Symbol> antecedent{production_data[2], production_data[3].front(), production_data[4].front()};
-    std::pair<State, Symbols> consequent{production_data[0], production_data[1]};
-    this->transition_table_.emplace(antecedent, consequent);
+    // Revisar que el tamaño es correcto (5) o mejorar esa estructura de datoscon una clase Transition
+    TransitionAntecedent antecedent{production_data[0], production_data[1].front(), production_data[2].front()};
+    TransitionConsequent consequent{production_data[3], production_data[4]};
+    this->transition_table_[antecedent].emplace_back(consequent);
   }
 }
 

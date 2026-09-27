@@ -20,19 +20,22 @@
 
 class PushdownAutomaton {
  public:
-  PushdownAutomaton(const AutomatonConfiguration& configuration) {
-    this->stack_ = AutomatonStack(configuration.initial_stack_symbol, configuration.stack_alphabet);
-    this->tape_ = Tape(configuration.tape_alphabet);
-    this->state_manager_ = StateManager(configuration.initial_state, configuration.automaton_states);
-    this->transition_table_ = TransitionTable(configuration.transition_table);
-  }
+  PushdownAutomaton(const AutomatonConfiguration& configuration)
+      : stack_(configuration.initial_stack_symbol, configuration.stack_alphabet),
+        tape_(configuration.tape_alphabet),
+        state_manager_(configuration.initial_state, configuration.automaton_states),
+        transition_table_(configuration.transition_table) {}
 
-  bool Simulate(std::vector<Symbol> new_string) const;
+  bool Accepts(const std::string&);
  private:
   AutomatonStack stack_;
   Tape tape_;
   StateManager state_manager_;
-  TransitionTable transition_table_;  
+  TransitionTable transition_table_;
+
+  static constexpr Symbol kEmptySymbol = '.';
+  bool CanAccept(const State&, const Tape&, const AutomatonStack&);
+  void Restart() { stack_.Restart(); tape_.Restart(); }
 };
 
 #endif

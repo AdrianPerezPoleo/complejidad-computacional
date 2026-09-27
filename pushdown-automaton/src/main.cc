@@ -17,13 +17,14 @@
 #include "../include/tape.h"
 #include "../include/automaton_stack.h"
 #include "../include/state_manager.h"
+#include "../include/pushdown_automaton.h"
 
 int main() {
+  std::set<State> possible_states = {"q1", "q2"};
   Alphabet tape_alphabet({'a', 'b'});
-  Alphabet stack_alphabet({'0', '1', 'Z'});
-  Symbol initial_stack_symbol = 'Z';
-  std::set<State> possible_states = {"q0", "q1", "qf"};
-  State initial_state = "q0";
+  Alphabet stack_alphabet({'S', 'A'});
+  State initial_state = "q1";
+  Symbol initial_stack_symbol = 'S';
 
   AutomatonConfiguration configuration{
       possible_states,
@@ -32,9 +33,10 @@ int main() {
       initial_state,
       initial_stack_symbol,
       TransitionTable({
-          {"q0", "1", "q0", "a", "Z"},
-          {"q0", "010", "q1", "b", "1"},
-          {"q1", "100", "qf", "b", "0Z"},
+          {"q1", "a", "S", "q1", "A"},
+          {"q1", "a", "A", "q1", "AA"},
+          {"q1", "b", "A", "q2", "."},
+          {"q2", "b", "A", "q2", "."}
       })};
 
   std::cout << "Pushdown Automaton Configuration" << std::endl;
@@ -47,27 +49,12 @@ int main() {
   }
   std::cout << std::endl;
 
-  std::cout << "Transition table:" << std::endl;
-  configuration.transition_table.PrintTransitions();
-
-  Tape tape(tape_alphabet);
-  tape.IntroduceString({'a', 'a', 'a'});
-  std::cout << "Tape: " << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << tape.GetNextSymbol() << std::endl;
-
-  AutomatonStack stack(initial_stack_symbol, stack_alphabet);
-  stack.Push('0');
-  std::cout << stack.Top() << std::endl;
-  stack.Push("Z10");
-  std::cout << stack.Top() << std::endl;
-
-  StateManager state_manager(initial_state, possible_states);
-  std::cout << state_manager.GetCurrentState() << std::endl;
-
-  state_manager.ChangeToState("qf");
-  std::cout << state_manager.GetCurrentState() << std::endl;
-
-  state_manager.ChangeToState("rt");
-  std::cout << state_manager.GetCurrentState() << std::endl;
+  PushdownAutomaton automaton(configuration);
+  if (automaton.Accepts({"aaabb"})) {
+    std::cout << "Accepted" << std::endl;
+  } else {
+    std::cout << "Rejected" << std::endl;
+  }
 
   return 0;
 }

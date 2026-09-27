@@ -21,20 +21,17 @@ using State = std::string;
 
 class StateManager {
  public:
-  StateManager(const State& initial_state, const std::set<State>& possible_states): possible_states_{possible_states} { 
-    this->ChangeToState(initial_state);
+  StateManager(const State& initial_state, const std::set<State>& possible_states)
+  : initial_state_{initial_state}, possible_states_{possible_states} { }
+
+  State GetInitialState() const { return initial_state_; }
+  bool IsValidState(const State& state) const { 
+    return possible_states_.contains(state); 
   }
 
-  State GetCurrentState() const { return current_state_; }
-  void ChangeToState(const State& new_state) { 
-    if (IsValidState(new_state)) this->current_state_ = new_state;
-    // else // Lanzar algún error
-  }
  private:
-  State current_state_;
+  State initial_state_;
   std::set<State> possible_states_;
-
-  bool IsValidState(const State& state) const { return possible_states_.find(state) != possible_states_.end(); }
 };
 
 #endif

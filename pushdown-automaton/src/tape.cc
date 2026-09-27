@@ -22,18 +22,20 @@
  * @return true if the tape is valid.
  * @return false otherwise.
  */
-bool Tape::IsValid(const std::vector<Symbol>& tape) const {
+bool Tape::IsValid(const std::string& tape) const {
   for (const auto& symbol : tape) {
     if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }
   return true;
 }
 
-void Tape::IntroduceString(const std::vector<Symbol>& new_string) {
+void Tape::IntroduceString(const std::string& new_string) {
   if (this->IsValid(new_string)) {
     tape_ = new_string;
+    head_ = 0;
   } else {
     // Lanzar error de símbolo no válido en la cinta
+    std::cout << "Tape::IntroduceString ha identificado un simbolo no valido" << std::endl;
   }
 }
 
@@ -43,9 +45,9 @@ void Tape::IntroduceString(const std::vector<Symbol>& new_string) {
  * 
  * @return Symbol Read symbol from the tape.
  */
-Symbol Tape::GetNextSymbol() {
+Symbol Tape::GetNextSymbol() const {
   try {
-    return this->tape_.at(head_++);
+    return this->tape_.at(head_);
   } catch (const std::out_of_range& exception) {
     return this->kEmptySymbol;
   }
