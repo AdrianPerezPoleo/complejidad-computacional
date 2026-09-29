@@ -13,6 +13,8 @@
 #define ALPHABET_H
 
 #include <set>
+#include <string>
+#include "automaton_error.h"
 
 using Symbol = char;
 
@@ -20,7 +22,7 @@ class Alphabet {
  public:
   Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} {
     if (alphabet_.count(this->kEmptySymbol) > 0) {
-      throw std::invalid_argument("Error en el alfabeto: El símbolo " + kEmptySymbol + std::string(" no puede formar parte de un alfabeto."));
+      throw InvalidAlphabetError(std::string("El simbolo reservado '") + kEmptySymbol + "' no puede formar parte de un alfabeto.");
     }
    }
 

@@ -10,6 +10,7 @@
  */
 
 #include "../include/automaton_configuration_reader.h"
+#include "../include/automaton_error.h"
 
 /**
  * @brief Helper method to skip comment lines and blank lines.
@@ -35,8 +36,7 @@ std::string AutomatonConfigurationReader::GetNextValidLine(std::ifstream& file) 
 AutomatonConfiguration AutomatonConfigurationReader::ReadConfiguration() {
   std::ifstream file(filepath_);
   if (!file.is_open()) {
-    std::cerr << "Error: No se pudo abrir el archivo de entrada: " << filepath_ << std::endl;
-    exit(EXIT_FAILURE);
+    throw ConfigurationFileError("No se pudo abrir el archivo de configuracion: " + filepath_);
   }
 
   std::set<State> automaton_states = ParseStates(file);
@@ -45,6 +45,16 @@ AutomatonConfiguration AutomatonConfigurationReader::ReadConfiguration() {
   State initial_state              = ParseSingleToken<State>(file);
   Symbol initial_stack_symbol      = ParseSingleToken<Symbol>(file);
   TransitionTable transition_table = ParseTransitionTable(file);
+
+  if (automaton_states.empty()) {
+    throw InvalidConfigurationError("La configuracion no contiene estados.");
+  }
+  if (initial_state.empty() || automaton_states.count(initial_state) == 0) {
+    throw InvalidConfigurationError("El estado inicial no esta definido en el conjunto de estados.");
+  }
+  if (!stack_alphabet.ContainsSymbol(initial_stack_symbol)) {
+    throw InvalidConfigurationError("El simbolo inicial de la pila no pertenece al alfabeto de pila.");
+  }
 
   file.close();
 

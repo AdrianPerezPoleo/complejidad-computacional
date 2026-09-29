@@ -19,4 +19,6 @@ struct ProgramOptions {
   bool trace_mode;
 };
 
+ProgramOptions ProcessParameters(const int argc, char* argv[]);
+
 #endif

@@ -12,6 +12,7 @@ add_executable(
     src/tape.cc
     src/pushdown_automaton.cc
     src/automaton_configuration_reader.cc
+    src/program_options.cc
 )
 
 target_link_libraries(

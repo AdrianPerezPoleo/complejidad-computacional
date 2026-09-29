@@ -22,7 +22,7 @@ bool PushdownAutomaton::Accepts(const std::string& new_string) {
   if (this->trace_mode_) transition_table_.PrintTransitions();
   this->Restart();
   Tape tape(this->tape_);
-  tape.IntroduceString(new_string);
+  if (!tape.IntroduceString(new_string)) return false;
 
   AutomatonStack initial_stack(this->stack_);
   return CanAccept(state_manager_.GetInitialState(), tape, initial_stack);

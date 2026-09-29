@@ -10,6 +10,7 @@
  */
 
 #include "../include/transition_table.h"
+#include "../include/automaton_error.h"
 
 /**
  * @brief Returns the transition associated to a given state an symbols.
@@ -48,7 +49,11 @@ std::vector<Transition> TransitionTable::GetTransitions(State current_state, Sym
 void TransitionTable::InitializeTable(const std::vector<std::vector<std::string>>& table_data_) {
   int transition_id = 1;
   for (const auto& production_data : table_data_ ) {
-    // Revisar que el tamaño es correcto (5) o mejorar esa estructura de datoscon una clase Transition
+    if (production_data.size() != 5 || production_data[0].empty() ||
+        production_data[1].size() != 1 || production_data[2].size() != 1 ||
+        production_data[3].empty() || production_data[4].empty()) {
+      throw InvalidTransitionError("Transicion mal formada: se esperaban 5 campos validos.");
+    }
     TransitionAntecedent antecedent{production_data[0], production_data[1].front(), production_data[2].front()};
     TransitionConsequent consequent{transition_id++, production_data[3], production_data[4]};
     this->transition_table_[antecedent].emplace_back(consequent);
