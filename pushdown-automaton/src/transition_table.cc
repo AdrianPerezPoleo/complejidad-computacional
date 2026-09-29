@@ -41,6 +41,16 @@ std::vector<Transition> TransitionTable::GetTransitions(State current_state, Sym
   return possible_transitions;
 }
 
+std::vector<Transition> TransitionTable::GetAllTransitions() const {
+  std::vector<Transition> transitions;
+  for (const auto& [antecedent, consequents] : transition_table_) {
+    for (const auto& consequent : consequents) {
+      transitions.push_back({antecedent, consequent});
+    }
+  }
+  return transitions;
+}
+
 /**
  * @brief Initializes the table with the productions given by the user.
  * 
@@ -54,6 +64,7 @@ void TransitionTable::InitializeTable(const std::vector<std::vector<std::string>
         production_data[3].empty() || production_data[4].empty()) {
       throw InvalidTransitionError("Transicion mal formada: se esperaban 5 campos validos.");
     }
+
     TransitionAntecedent antecedent{production_data[0], production_data[1].front(), production_data[2].front()};
     TransitionConsequent consequent{transition_id++, production_data[3], production_data[4]};
     this->transition_table_[antecedent].emplace_back(consequent);

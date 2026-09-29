@@ -25,7 +25,9 @@ class PushdownAutomaton {
         tape_(configuration.tape_alphabet),
         state_manager_(configuration.initial_state, configuration.automaton_states),
         transition_table_(configuration.transition_table),
-        trace_mode_{trace_mode} {}
+        trace_mode_{trace_mode} {
+    VerifyTransitionTable(configuration);
+  }
 
   bool Accepts(const std::string&);
  private:
@@ -37,6 +39,7 @@ class PushdownAutomaton {
   bool trace_mode_;
 
   static constexpr Symbol kEmptySymbol = '.';
+  void VerifyTransitionTable(const AutomatonConfiguration&) const;
   bool CanAccept(const State&, const Tape&, const AutomatonStack&);
   void Restart() { stack_.Restart(); tape_.Restart(); }
 };

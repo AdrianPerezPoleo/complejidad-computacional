@@ -10,6 +10,40 @@
  */
 
 #include "../include/pushdown_automaton.h"
+#include "../include/automaton_error.h"
+
+void PushdownAutomaton::VerifyTransitionTable(const AutomatonConfiguration& configuration) const {
+  for (const auto& transition : transition_table_.GetAllTransitions()) {
+    const auto& antecedent = transition.antecedent;
+    const auto& consequent = transition.consequent;
+
+    if (configuration.automaton_states.count(antecedent.current_state) == 0) {
+      throw InvalidTransitionError("El estado de origen '" + antecedent.current_state +
+                                   "' de una transicion no pertenece al automata.");
+    }
+    if (configuration.automaton_states.count(consequent.next_state) == 0) {
+      throw InvalidTransitionError("El estado de destino '" + consequent.next_state +
+                                   "' de una transicion no pertenece al automata.");
+    }
+    if (antecedent.current_tape_symbol != kEmptySymbol &&
+        !configuration.tape_alphabet.ContainsSymbol(antecedent.current_tape_symbol)) {
+      throw InvalidTransitionError(std::string("El simbolo de cinta '") + antecedent.current_tape_symbol +
+                                   "' de una transicion no pertenece al alfabeto de cinta.");
+    }
+    if (!configuration.stack_alphabet.ContainsSymbol(antecedent.current_stack_symbol)) {
+      throw InvalidTransitionError(std::string("El simbolo de pila '") + antecedent.current_stack_symbol +
+                                   "' de una transicion no pertenece al alfabeto de pila.");
+    }
+    if (consequent.symbols_to_push != ".") {
+      for (const Symbol symbol : consequent.symbols_to_push) {
+        if (!configuration.stack_alphabet.ContainsSymbol(symbol)) {
+          throw InvalidTransitionError(std::string("El simbolo '") + symbol +
+                                       "' que se apila no pertenece al alfabeto de pila.");
+        }
+      }
+    }
+  }
+}
 
 /**
  * @brief Simulates the behaviour of a pushdown automaton.
@@ -33,9 +67,9 @@ bool PushdownAutomaton::CanAccept(const State& current_state,
                                   const Tape& current_tape,   
                                   const AutomatonStack& current_stack) {
   if (this->trace_mode_) {
-    std::cout << "State: " << current_state << "\t|Tape: "; 
-    current_tape.PrintSymbolsLeft(std::cout) << "\t| Stack: "; 
-    current_stack.PrintContent(std::cout) << "\t  | Available Transitions: ";
+    std::cout << "Estado: " << current_state << "\t| Cinta: "; 
+    current_tape.PrintSymbolsLeft(std::cout) << "\t| Pila: "; 
+    current_stack.PrintContent(std::cout) << "\t  | Transiciones Disponibles: ";
   }
   if (!current_tape.HasSymbolsToRead() && current_stack.IsEmpty()) return true;
   if (current_stack.IsEmpty()) return false;

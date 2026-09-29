@@ -26,7 +26,7 @@ int main(const int argc, char* argv[]) {
 
     PushdownAutomaton automaton(configuration, options.trace_mode);
     while (true) {
-      std::cout << "Introduzca una cadena a procesar:\n";
+      std::cout << "Introduzca una cadena a procesar (O Ctrl + C para salir):\n";
       std::string string_to_verify;
       std::cin >> string_to_verify;
       if (automaton.Accepts(string_to_verify)) {

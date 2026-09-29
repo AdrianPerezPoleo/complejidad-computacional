@@ -47,9 +47,12 @@ struct Transition {
 
 class TransitionTable {
  public:
-  TransitionTable(const std::vector<std::vector<std::string>>& table_data_) { InitializeTable(table_data_); }
+  explicit TransitionTable(const std::vector<std::vector<std::string>>& table_data_) {
+    InitializeTable(table_data_);
+  }
 
   std::vector<Transition> GetTransitions(State, Symbol, Symbol) const;
+  std::vector<Transition> GetAllTransitions() const;
   void PrintTransitions() const;
  private:
   std::map<TransitionAntecedent, std::vector<TransitionConsequent>>transition_table_;
