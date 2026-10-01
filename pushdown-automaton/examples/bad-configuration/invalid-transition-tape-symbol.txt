@@ -4,10 +4,10 @@
 q1 q2
 a b
 S A
-q0
+q1
 S
 # Transiciones
-q1 a S q5 A
+q1 a S q1 A
 q1 a A q1 AA
-q1 b A q2 .
+q1 H A q2 .
 q2 b A q2 .
