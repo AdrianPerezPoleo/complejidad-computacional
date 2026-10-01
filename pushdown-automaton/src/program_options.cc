@@ -23,7 +23,7 @@ void PrintUsageAndExit(const std::string& program_name, const std::string& error
   if (!error_msg.empty()) {
     std::cerr << "Error: " << error_msg << std::endl;
   }
-  std::cerr << "Uso: " << program_name << " -config <fichero.pda> [-trace y|n]" << std::endl;
+  std::cerr << "Uso: " << program_name << " -config <fichero.pda> -trace y|n" << std::endl;
   std::exit(EXIT_FAILURE);
 }
 

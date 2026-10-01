@@ -9,10 +9,6 @@
  * 
  */
 
-#include <iostream>
-#include <set>
-#include <vector>
-
 #include "../include/automaton_configuration_reader.h"
 #include "../include/automaton_error.h"
 #include "../include/pushdown_automaton.h"

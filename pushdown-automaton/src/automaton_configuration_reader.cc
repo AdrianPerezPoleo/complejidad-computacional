@@ -13,22 +13,6 @@
 #include "../include/automaton_error.h"
 
 /**
- * @brief Helper method to skip comment lines and blank lines.
- */
-std::string AutomatonConfigurationReader::GetNextValidLine(std::ifstream& file) const {
-  std::string line;
-  while (std::getline(file, line)) {
-    line = line.substr(0, line.find('#')); // Removes the string characters after a #.
-    
-    // Checks if the line has at least one character that is not a space or tab.
-    if (line.find_first_not_of(" \t\r\n") != std::string::npos) {
-      return line;
-    }
-  }
-  return "";
-}
-
-/**
  * @brief Reads the file and builds the full AutomatonConfiguration object.
  * 
  * @return AutomatonConfiguration with parsed components and TransitionTable.
@@ -57,7 +41,6 @@ AutomatonConfiguration AutomatonConfigurationReader::ReadConfiguration() {
   }
 
   file.close();
-
   return AutomatonConfiguration{
       automaton_states,
       tape_alphabet,
@@ -66,6 +49,22 @@ AutomatonConfiguration AutomatonConfigurationReader::ReadConfiguration() {
       initial_stack_symbol,
       transition_table
   };
+}
+
+/**
+ * @brief Helper method to skip comment lines and blank lines.
+ */
+std::string AutomatonConfigurationReader::GetNextValidLine(std::ifstream& file) const {
+  std::string line;
+  while (std::getline(file, line)) {
+    line = line.substr(0, line.find('#')); // Removes the string characters after a #.
+    
+    // Checks if the line has at least one character that is not a space or tab.
+    if (line.find_first_not_of(" \t\r\n") != std::string::npos) {
+      return line;
+    }
+  }
+  return "";
 }
 
 /**

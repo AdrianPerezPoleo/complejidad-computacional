@@ -15,13 +15,10 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <tuple>
 #include <utility>
 #include <vector>
 
-using Symbol = char;
-using Symbols = std::string;
-using State = std::string;
+#include "types.h"
 
 struct TransitionAntecedent {
   State current_state;

@@ -13,14 +13,14 @@
 #include "../include/automaton_error.h"
 
 /**
- * @brief Returns the transition associated to a given state an symbols.
+ * @brief Returns the transition associated to a given state and symbol.
  * 
  * @return std::pair<State, Symbol> Transition to be made.
  */
 std::vector<Transition> TransitionTable::GetTransitions(State current_state, Symbol tape_symbol, Symbol stack_symbol) const {
   std::vector<Transition> possible_transitions;
 
-  if (tape_symbol != '.') {
+  if (tape_symbol != kEmptySymbol) {
     TransitionAntecedent real_key{current_state, tape_symbol, stack_symbol};
     auto it = this->transition_table_.find(real_key);
     if (it != transition_table_.end()) {
@@ -30,7 +30,7 @@ std::vector<Transition> TransitionTable::GetTransitions(State current_state, Sym
     }
   }
 
-  TransitionAntecedent epsilon_key{current_state, '.', stack_symbol};
+  TransitionAntecedent epsilon_key{current_state, kEmptySymbol, stack_symbol};
   auto it_epsilon = this->transition_table_.find(epsilon_key);
   if (it_epsilon != this->transition_table_.end()) {
     for (const auto& consequent : it_epsilon->second) {
@@ -41,6 +41,11 @@ std::vector<Transition> TransitionTable::GetTransitions(State current_state, Sym
   return possible_transitions;
 }
 
+/**
+ * @brief Returns all the transitions the transition table has.
+ * 
+ * @return std::vector<Transition> 
+ */
 std::vector<Transition> TransitionTable::GetAllTransitions() const {
   std::vector<Transition> transitions;
   for (const auto& [antecedent, consequents] : transition_table_) {
@@ -71,6 +76,10 @@ void TransitionTable::InitializeTable(const std::vector<std::vector<std::string>
   }
 }
 
+/**
+ * @brief Displays all the transitions in the transition table (with its identifier).
+ * 
+ */
 void TransitionTable::PrintTransitions() const {
   for (const auto& [antecedent, consequents] : this->transition_table_) {
     for (const auto& consequent : consequents) {

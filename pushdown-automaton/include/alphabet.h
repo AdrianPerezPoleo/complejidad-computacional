@@ -14,14 +14,14 @@
 
 #include <set>
 #include <string>
-#include "automaton_error.h"
 
-using Symbol = char;
+#include "automaton_error.h"
+#include "types.h"
 
 class Alphabet {
  public:
   Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} {
-    if (alphabet_.count(this->kEmptySymbol) > 0) {
+    if (alphabet_.count(kEmptySymbol) > 0) {
       throw InvalidAlphabetError(std::string("El simbolo reservado '") + kEmptySymbol + "' no puede formar parte de un alfabeto.");
     }
    }
@@ -29,7 +29,6 @@ class Alphabet {
   bool ContainsSymbol(const Symbol& symbol) const { return this->alphabet_.find(symbol) != this->alphabet_.end(); }
  private:
   std::set<Symbol> alphabet_;
-  static constexpr Symbol kEmptySymbol = '.';
 };
 
 #endif

@@ -26,7 +26,6 @@ bool Tape::IntroduceString(const std::string& new_string) {
   } else {
     tape_.clear();
     head_ = 0;
-    std::cout << "Tape::IntroduceString ha identificado un simbolo no valido: " << new_string << std::endl;
     return false;
   }
 }
@@ -41,7 +40,7 @@ Symbol Tape::GetNextSymbol() const {
   try {
     return this->tape_.at(head_);
   } catch (const std::out_of_range& exception) {
-    return this->kEmptySymbol;
+    return kEmptySymbol;
   }
 }
 
@@ -71,6 +70,7 @@ std::ostream& Tape::PrintSymbolsLeft(std::ostream& os) const {
  * @return false otherwise.
  */
 bool Tape::IsValid(const std::string& tape) const {
+  if (tape == std::to_string(kEmptySymbol)) return true;
   for (const auto& symbol : tape) {
     if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }

@@ -16,8 +16,7 @@
 #include <set>
 
 #include "alphabet.h"
-
-using State = std::string;
+#include "types.h"
 
 class StateManager {
  public:

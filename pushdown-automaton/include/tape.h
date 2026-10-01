@@ -15,7 +15,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 #include "alphabet.h"
+#include "types.h"
 
 class Tape {
  public:
@@ -37,7 +39,6 @@ class Tape {
   Alphabet alphabet_;
 
   bool IsValid(const std::string& tape) const;
-  static constexpr Symbol kEmptySymbol = '.';
 };
 
 #endif

@@ -38,7 +38,6 @@ class PushdownAutomaton {
 
   bool trace_mode_;
 
-  static constexpr Symbol kEmptySymbol = '.';
   void VerifyTransitionTable(const AutomatonConfiguration&) const;
   bool CanAccept(const State&, const Tape&, const AutomatonStack&);
   void Restart() { stack_.Restart(); tape_.Restart(); }

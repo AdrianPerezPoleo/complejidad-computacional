@@ -10,6 +10,7 @@ add_executable(
     src/main.cc
     src/transition_table.cc
     src/tape.cc
+    src/automaton_stack.cc
     src/pushdown_automaton.cc
     src/automaton_configuration_reader.cc
     src/program_options.cc

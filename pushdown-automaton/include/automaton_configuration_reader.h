@@ -14,7 +14,6 @@
 
 #include <string>
 #include <vector>
-#include <set>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -36,22 +35,20 @@ class AutomatonConfigurationReader {
   AutomatonConfigurationReader(const std::string& filepath) : filepath_{filepath} {}
 
   AutomatonConfiguration ReadConfiguration();
-
  private:
   std::string filepath_;
 
   std::string GetNextValidLine(std::ifstream& file) const;
   std::set<State> ParseStates(std::ifstream& file) const;
   Alphabet ParseAlphabet(std::ifstream& file) const;
-  
+  TransitionTable ParseTransitionTable(std::ifstream& file) const;
+
   template <typename T>
   T ParseSingleToken(std::ifstream& file) const {
     T token{};
     std::stringstream(GetNextValidLine(file)) >> token;
     return token;
-  }
-
-  TransitionTable ParseTransitionTable(std::ifstream& file) const;
+  } 
 };
 
 #endif
