@@ -4,7 +4,7 @@
 q1 q2
 a b
 S A
-q1
+q0
 S
 # Transiciones
 q1 a S q1 A
