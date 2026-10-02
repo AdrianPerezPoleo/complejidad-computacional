@@ -108,6 +108,7 @@ q1 a A1 q2 A            # función de transición: (q2, A) ∈ δ (q1, a, A1)
 ## Arquitectura del Software
 El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 
+![](doc/class_diagram.png)
 
 ### Descripción de los principales elementos:
 - `Pushdown Automaton`: Clase principal que orquesta a las demás. Gestiona la lógica de evaluación utilizando una estrategia de búsqueda en profundidad.
