@@ -52,7 +52,7 @@ class TransitionTable {
 
   std::vector<Transition> GetTransitions(State, Symbol, Symbol) const;
   std::vector<Transition> GetAllTransitions() const;
-  void PrintTransitions() const;
+  void PrintTransitions(std::ostream&) const;
  private:
   std::map<TransitionAntecedent, std::vector<TransitionConsequent>>transition_table_;
 

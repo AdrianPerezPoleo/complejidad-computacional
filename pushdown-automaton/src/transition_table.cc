@@ -82,10 +82,10 @@ void TransitionTable::InitializeTable(const std::vector<std::vector<std::string>
  * @brief Displays all the transitions in the transition table (with its identifier).
  * 
  */
-void TransitionTable::PrintTransitions() const {
+void TransitionTable::PrintTransitions(std::ostream& os) const {
   for (const auto& [antecedent, consequents] : this->transition_table_) {
     for (const auto& consequent : consequents) {
-      std::cout << consequent.identifier << ": (" 
+      os << consequent.identifier << ": (" 
                 << antecedent.current_state << ", " 
                 << antecedent.current_tape_symbol << ", " 
                 << antecedent.current_stack_symbol << ") -> (" 

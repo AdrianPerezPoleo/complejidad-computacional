@@ -19,6 +19,13 @@
 #include "transition_table.h"
 
 namespace pda {
+
+struct TraceInformation {
+  State current_state;
+  const Tape& current_tape;
+  const AutomatonStack& current_stack;
+  const std::vector<Transition>& possible_transitions;
+};
   
 class PushdownAutomaton {
  public:
@@ -43,6 +50,7 @@ class PushdownAutomaton {
   void VerifyTransitionTable(const AutomatonConfiguration&) const;
   bool CanAccept(const State&, const Tape&, const AutomatonStack&);
   void Restart() { stack_.Restart(); tape_.Restart(); }
+  void PrintTrace(std::ostream& os, const TraceInformation&) const;
 };
 
 }

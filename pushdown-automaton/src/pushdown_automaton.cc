@@ -22,7 +22,7 @@ namespace pda {
  * @return false otherwise.
  */
 bool PushdownAutomaton::Accepts(const std::string& new_string) {
-  if (this->trace_mode_) transition_table_.PrintTransitions();
+  if (trace_mode_) transition_table_.PrintTransitions(std::cout);
   this->Restart();
   Tape tape(this->tape_);
   if (!tape.IntroduceString(new_string)) return false;
@@ -44,11 +44,7 @@ bool PushdownAutomaton::Accepts(const std::string& new_string) {
 bool PushdownAutomaton::CanAccept(const State& current_state, 
                                   const Tape& current_tape,   
                                   const AutomatonStack& current_stack) {
-  if (this->trace_mode_) {
-    std::cout << "Estado: " << current_state << "\t| Cinta: "; 
-    current_tape.PrintSymbolsLeft(std::cout) << "\t| Pila: "; 
-    current_stack.PrintContent(std::cout) << "\t  | Transiciones Disponibles: ";
-  }
+
   if (!current_tape.HasSymbolsToRead() && current_stack.IsEmpty()) return true;
   if (current_stack.IsEmpty()) return false;
 
@@ -56,13 +52,12 @@ bool PushdownAutomaton::CanAccept(const State& current_state,
   Symbol tape_symbol = current_tape.GetNextSymbol();
 
   const auto& possible_transitions = this->transition_table_.GetTransitions(current_state, tape_symbol, current_stack_symbol);
- 
-  if (this->trace_mode_) {
-    for (const auto& transition : possible_transitions) {
-      std::cout << transition.consequent.identifier << " ";
-    }
-    std::cout << std::endl;
-  }
+
+  TraceInformation trace_information = {
+    current_state, current_tape, current_stack, possible_transitions
+  };
+  PrintTrace(std::cout, trace_information);
+
   for (const auto& transition : possible_transitions) {
     AutomatonStack new_stack = current_stack;
     new_stack.Pop();
@@ -77,6 +72,7 @@ bool PushdownAutomaton::CanAccept(const State& current_state,
       return true;
    }
   }
+
   return false;
 }
 
@@ -115,6 +111,25 @@ void PushdownAutomaton::VerifyTransitionTable(const AutomatonConfiguration& conf
         }
       }
     }
+  }
+}
+
+/**
+ * @brief Displays teh trace of the algorithm.
+ * 
+ */
+void PushdownAutomaton::PrintTrace(std::ostream& os, const TraceInformation& trace) const {
+  if (this->trace_mode_) {
+    os << "Estado: " << trace.current_state;
+    os << "\t|" << "Cinta: ";
+    trace.current_tape.PrintSymbolsLeft(os);
+    os << "\t|" << "Pila: ";
+    trace.current_stack.PrintContent(os);
+    os << "\t|" << "Posibles transiciones: ";
+    for (const auto& transition : trace.possible_transitions) {
+      os << transition.consequent.identifier << " ";
+    }
+    os << "\n";
   }
 }
 
