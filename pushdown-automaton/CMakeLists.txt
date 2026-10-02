@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(
-    pushdown_automaton
+    pushdown_automaton_simulator
     src/main.cc
     src/transition_table.cc
     src/tape.cc
@@ -17,5 +17,5 @@ add_executable(
 )
 
 target_link_libraries(
-    pushdown_automaton
+    pushdown_automaton_simulator
 )
