@@ -12,6 +12,8 @@
 #include "../include/transition_table.h"
 #include "../include/automaton_error.h"
 
+namespace pda {
+
 /**
  * @brief Returns the transition associated to a given state and symbol.
  * 
@@ -92,4 +94,6 @@ void TransitionTable::PrintTransitions() const {
                 << std::endl;
     }
   }
+}
+
 }

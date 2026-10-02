@@ -15,6 +15,8 @@
 #include <exception>
 #include <string>
 
+namespace pda {
+
 /** @brief Base exception for pushdown automaton errors. */
 class AutomatonError : public std::exception {
  public:
@@ -55,5 +57,7 @@ class InvalidInputError : public AutomatonError {
  public:
   using AutomatonError::AutomatonError;
 };
+
+}
 
 #endif

@@ -21,6 +21,8 @@
 #include "alphabet.h"
 #include "transition_table.h"
 
+namespace pda {
+
 struct AutomatonConfiguration {
   std::set<State> automaton_states;
   Alphabet tape_alphabet;
@@ -50,5 +52,7 @@ class AutomatonConfigurationReader {
     return token;
   } 
 };
+
+}
 
 #endif

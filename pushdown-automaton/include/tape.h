@@ -19,6 +19,8 @@
 #include "alphabet.h"
 #include "types.h"
 
+namespace pda {
+  
 class Tape {
  public:
   Tape(const Alphabet& tape_alphabet) : alphabet_{tape_alphabet}, head_{0} { }
@@ -40,5 +42,7 @@ class Tape {
 
   bool IsValid(const std::string& tape) const;
 };
+
+}
 
 #endif

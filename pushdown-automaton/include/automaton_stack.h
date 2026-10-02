@@ -21,6 +21,8 @@
 #include "automaton_error.h"
 #include "types.h"
 
+namespace pda {
+  
 class AutomatonStack {
  public:
   AutomatonStack(Symbol initial_symbol, const Alphabet& stack_alphabet) : initial_symbol_{initial_symbol}, alphabet_{stack_alphabet} { 
@@ -43,4 +45,5 @@ class AutomatonStack {
   Alphabet alphabet_;
 };
 
+}
 #endif

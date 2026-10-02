@@ -12,10 +12,13 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+namespace pda {
+  
 using Symbol = char;
 using Symbols = std::string;
 using State = std::string;
 
 constexpr Symbol kEmptySymbol = '.';
+}
 
 #endif

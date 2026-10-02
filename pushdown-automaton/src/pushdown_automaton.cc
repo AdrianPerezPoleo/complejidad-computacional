@@ -12,6 +12,8 @@
 #include "../include/pushdown_automaton.h"
 #include "../include/automaton_error.h"
 
+namespace pda {
+
 /**
  * @brief Simulates the behaviour of a pushdown automaton.
  * 
@@ -114,4 +116,6 @@ void PushdownAutomaton::VerifyTransitionTable(const AutomatonConfiguration& conf
       }
     }
   }
+}
+
 }

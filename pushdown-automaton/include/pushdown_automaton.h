@@ -18,6 +18,8 @@
 #include "state_manager.h"
 #include "transition_table.h"
 
+namespace pda {
+  
 class PushdownAutomaton {
  public:
   PushdownAutomaton(const AutomatonConfiguration& configuration, bool trace_mode)
@@ -42,5 +44,7 @@ class PushdownAutomaton {
   bool CanAccept(const State&, const Tape&, const AutomatonStack&);
   void Restart() { stack_.Restart(); tape_.Restart(); }
 };
+
+}
 
 #endif

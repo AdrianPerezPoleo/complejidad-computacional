@@ -18,17 +18,21 @@
 #include "automaton_error.h"
 #include "types.h"
 
+namespace pda { 
+
 class Alphabet {
  public:
   Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} {
     if (alphabet_.count(kEmptySymbol) > 0) {
       throw InvalidAlphabetError(std::string("El simbolo reservado '") + kEmptySymbol + "' no puede formar parte de un alfabeto.");
     }
-   }
+  }
 
   bool ContainsSymbol(const Symbol& symbol) const { return this->alphabet_.find(symbol) != this->alphabet_.end(); }
  private:
   std::set<Symbol> alphabet_;
 };
+
+}
 
 #endif

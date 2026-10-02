@@ -13,6 +13,8 @@
 #include <iostream>
 #include "../include/tape.h"
 
+namespace pda {
+
 /**
  * @brief Introduces a new string into the tape, removing the content that was before.
  * 
@@ -75,4 +77,6 @@ bool Tape::IsValid(const std::string& tape) const {
     if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }
   return true;
+}
+
 }

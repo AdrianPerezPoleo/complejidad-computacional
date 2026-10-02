@@ -17,10 +17,10 @@
 int main(const int argc, char* argv[]) {
   try {
     ProgramOptions options = ProcessParameters(argc, argv);
-    AutomatonConfigurationReader reader(options.program_file);
-    AutomatonConfiguration configuration = reader.ReadConfiguration();
+    pda::AutomatonConfigurationReader reader(options.program_file);
+    pda::AutomatonConfiguration configuration = reader.ReadConfiguration();
 
-    PushdownAutomaton automaton(configuration, options.trace_mode);
+    pda::PushdownAutomaton automaton(configuration, options.trace_mode);
     while (true) {
       std::cout << "Introduzca una cadena a procesar (O Ctrl + C para salir):\n";
       std::string string_to_verify;
@@ -31,7 +31,7 @@ int main(const int argc, char* argv[]) {
         std::cout << "\nRejected" << std::endl;
       }
     }
-  } catch (const AutomatonError& error) {
+  } catch (const pda::AutomatonError& error) {
     std::cerr << "Error: " << error.what() << std::endl;
     return 1;
   }

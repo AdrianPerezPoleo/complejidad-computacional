@@ -18,6 +18,8 @@
 #include "alphabet.h"
 #include "types.h"
 
+namespace pda {
+  
 class StateManager {
  public:
   StateManager(const State& initial_state, const std::set<State>& possible_states)
@@ -32,5 +34,7 @@ class StateManager {
   State initial_state_;
   std::set<State> possible_states_;
 };
+
+}
 
 #endif

@@ -12,12 +12,14 @@
 #include "../include/automaton_configuration_reader.h"
 #include "../include/automaton_error.h"
 
+namespace pda {
+
 /**
  * @brief Reads the file and builds the full AutomatonConfiguration object.
  * 
  * @return AutomatonConfiguration with parsed components and TransitionTable.
  */
-AutomatonConfiguration AutomatonConfigurationReader::ReadConfiguration() {
+pda::AutomatonConfiguration AutomatonConfigurationReader::ReadConfiguration() {
   std::ifstream file(filepath_);
   if (!file.is_open()) {
     throw ConfigurationFileError("No se pudo abrir el archivo de configuracion: " + filepath_);
@@ -123,4 +125,6 @@ TransitionTable AutomatonConfigurationReader::ParseTransitionTable(std::ifstream
   }
 
   return TransitionTable(transition_matrix);
+}
+
 }

@@ -20,6 +20,8 @@
 
 #include "types.h"
 
+namespace pda {
+  
 struct TransitionAntecedent {
   State current_state;
   Symbol current_tape_symbol;
@@ -27,7 +29,7 @@ struct TransitionAntecedent {
 
   bool operator<(const TransitionAntecedent& other) const {
     return std::tie(current_state, current_tape_symbol, current_stack_symbol) <
-           std::tie(other.current_state, other.current_tape_symbol, other.current_stack_symbol);
+          std::tie(other.current_state, other.current_tape_symbol, other.current_stack_symbol);
   }
 };
 
@@ -56,5 +58,7 @@ class TransitionTable {
 
   void InitializeTable(const std::vector<std::vector<std::string>>& table_data_);
 };
+  
+}
 
 #endif

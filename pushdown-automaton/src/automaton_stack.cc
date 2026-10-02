@@ -11,6 +11,8 @@
 
 #include "../include/automaton_stack.h"
 
+namespace pda {
+
 /**
  * @brief Stores a new symbol into the top of the stack.
  * 
@@ -53,4 +55,6 @@ std::ostream& AutomatonStack::PrintContent(std::ostream& os) const {
   if (stack_content == "") stack_content = "-";
   os << stack_content;
   return os; 
+}
+
 }
