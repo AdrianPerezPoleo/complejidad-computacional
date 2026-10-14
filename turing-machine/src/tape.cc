@@ -13,7 +13,7 @@
 #include <iostream>
 #include "../include/tape.h"
 
-namespace tm {
+namespace turing {
 
 /**
  * @brief Introduces a new string into the tape, removing the content that was before.

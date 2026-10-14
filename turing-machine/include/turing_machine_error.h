@@ -15,7 +15,7 @@
 #include <exception>
 #include <string>
 
-namespace tm {
+namespace turing {
 
 /** @brief Base exception for pushdown automaton errors. */
 class TuringMachineError : public std::exception {

@@ -18,15 +18,11 @@
 #include "turing_machine_error.h"
 #include "types.h"
 
-namespace tm { 
+namespace turing { 
 
 class Alphabet {
  public:
-  Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} {
-    if (alphabet_.count(kEmptySymbol) > 0) {
-      throw InvalidAlphabetError(std::string("El simbolo reservado '") + kEmptySymbol + "' no puede formar parte de un alfabeto.");
-    }
-  }
+  Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} { }
 
   bool ContainsSymbol(const Symbol& symbol) const { return this->alphabet_.find(symbol) != this->alphabet_.end(); }
  private:

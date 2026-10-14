@@ -18,7 +18,7 @@
 #include "alphabet.h"
 #include "types.h"
 
-namespace tm {
+namespace turing {
   
 class StateManager {
  public:

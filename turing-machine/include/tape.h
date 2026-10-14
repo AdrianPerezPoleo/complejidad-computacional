@@ -19,11 +19,11 @@
 #include "alphabet.h"
 #include "types.h"
 
-namespace tm {
+namespace turing {
   
 class Tape {
  public:
-  Tape(const Alphabet& tape_alphabet) : alphabet_{tape_alphabet}, head_{0} { }
+  Tape(const Alphabet& input_alphabet) : alphabet_{input_alphabet}, head_{0} { }
   Tape(const Tape&) = default;
 
   bool IntroduceString(const std::string& new_string);
