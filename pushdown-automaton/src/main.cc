@@ -31,7 +31,7 @@ int main(const int argc, char* argv[]) {
         std::cout << "\nRejected" << std::endl;
       }
     }
-  } catch (const pda::AutomatonError& error) {
+  } catch (const pda::TuringMachineError& error) {
     std::cerr << "Error: " << error.what() << std::endl;
     return 1;
   }

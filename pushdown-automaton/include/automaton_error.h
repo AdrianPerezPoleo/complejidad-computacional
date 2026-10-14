@@ -18,9 +18,9 @@
 namespace pda {
 
 /** @brief Base exception for pushdown automaton errors. */
-class AutomatonError : public std::exception {
+class TuringMachineError : public std::exception {
  public:
-  explicit AutomatonError(std::string message) : message_{std::move(message)} {}
+  explicit TuringMachineError(std::string message) : message_{std::move(message)} {}
 
   const char* what() const noexcept override { return message_.c_str(); }
 
@@ -29,33 +29,33 @@ class AutomatonError : public std::exception {
 };
 
 /** @brief Reports an error while opening or reading a configuration file. */
-class ConfigurationFileError : public AutomatonError {
+class ConfigurationFileError : public TuringMachineError {
  public:
-  using AutomatonError::AutomatonError;
+  using TuringMachineError::TuringMachineError;
 };
 
 /** @brief Reports invalid or inconsistent automaton configuration data. */
-class InvalidConfigurationError : public AutomatonError {
+class InvalidConfigurationError : public TuringMachineError {
  public:
-  using AutomatonError::AutomatonError;
+  using TuringMachineError::TuringMachineError;
 };
 
 /** @brief Reports an invalid symbol alphabet definition. */
-class InvalidAlphabetError : public AutomatonError {
+class InvalidAlphabetError : public TuringMachineError {
  public:
-  using AutomatonError::AutomatonError;
+  using TuringMachineError::TuringMachineError;
 };
 
 /** @brief Reports a malformed or invalid transition definition. */
-class InvalidTransitionError : public AutomatonError {
+class InvalidTransitionError : public TuringMachineError {
  public:
-  using AutomatonError::AutomatonError;
+  using TuringMachineError::TuringMachineError;
 };
 
 /** @brief Reports input that contains symbols outside the tape alphabet. */
-class InvalidInputError : public AutomatonError {
+class InvalidInputError : public TuringMachineError {
  public:
-  using AutomatonError::AutomatonError;
+  using TuringMachineError::TuringMachineError;
 };
 
 }
