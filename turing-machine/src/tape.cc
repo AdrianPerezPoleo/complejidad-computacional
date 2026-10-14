@@ -38,11 +38,23 @@ bool Tape::IntroduceString(const std::string& new_string) {
  * 
  * @return Symbol Read symbol from the tape.
  */
-Symbol Tape::GetNextSymbol() const {
+Symbol Tape::Read() const {
   try {
     return this->tape_.at(head_);
   } catch (const std::out_of_range& exception) {
     return kEmptySymbol;
+  }
+}
+
+void Tape::Write(const Symbol& symbol) {
+  if (this->alphabet_.ContainsSymbol(symbol)) {
+    try {
+      this->tape_.at(head_) = symbol;
+    } catch (std::out_of_range& error) {
+      this->tape_ += symbol;
+    }   
+  } else {
+    throw InvalidAlphabetError("Inserting the symbol " + std::to_string(symbol) + " in the tape is not allowed.");
   }
 }
 
@@ -52,14 +64,17 @@ Symbol Tape::GetNextSymbol() const {
  * @param os Output stream.
  * @return std::ostream& 
  */
-std::ostream& Tape::PrintSymbolsLeft(std::ostream& os) const {
-  std::string symbols_left = "";
-  for (size_t i{head_}; i < tape_.size(); ++i) {
-    symbols_left += tape_[i];
+std::ostream& Tape::PrintTape(std::ostream& os) const {
+  std::string tape_symbols = "";
+  for (int i{0}; i < (int)tape_.size(); ++i) {
+    tape_symbols += this->tape_.at(i);
+    if (head_ == i) {
+      tape_symbols += "ñ";
+    }
   }
-  if (symbols_left == "")
-    symbols_left = "-";
-  os << symbols_left;
+  if (tape_symbols == "")
+    tape_symbols = "-";
+  os << tape_symbols;
   return os;
 }
 
@@ -77,6 +92,33 @@ bool Tape::IsValid(const std::string& tape) const {
     if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }
   return true;
+}
+
+/**
+ * @brief Moves the head of the tape to the given direction.
+ * 
+ * @param movement Movement associated to a direction. 
+ */
+void Tape::Move(const TapeMovements& movement) {
+  switch (movement) {
+    case LEFT:
+      if (head_ == 0) {
+        tape_ = kEmptySymbol + tape_;
+      } else {
+        --head_;
+      }
+      break;
+    case RIGHT:
+      if (head_ == tape_.size() - 1) {
+        tape_ += kEmptySymbol;
+      }
+      ++head_;
+      break;
+    case STOP:
+      break;
+    default:
+    break;
+  }
 }
 
 }

@@ -9,6 +9,7 @@ add_executable(
     turing-machine-simulator
     src/main.cc
     src/program_options.cc
+    src/tape.cc
     src/turing_machine_configuration_reader.cc
 )
 

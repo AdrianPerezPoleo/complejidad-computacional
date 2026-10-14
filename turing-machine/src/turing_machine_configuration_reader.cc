@@ -46,7 +46,7 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
 
   for (const State& state : accepting_states) {
     if (!possible_states.contains(state)) {
-      throw InvalidConfigurationError("El estado de aceptación" + std::string(state) + " no existe.");
+      throw InvalidConfigurationError("El estado de aceptación " + std::string(state) + " no existe.");
     }
   }
 
@@ -57,6 +57,7 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
       tape_alphabet,
       initial_state,
       white_symbol,
+      accepting_states,
       number_of_tapes
       // transition_table
   };

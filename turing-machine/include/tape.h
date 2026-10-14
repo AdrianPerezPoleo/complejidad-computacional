@@ -20,6 +20,10 @@
 #include "types.h"
 
 namespace turing {
+
+enum TapeMovements {
+  RIGHT, LEFT, STOP
+};
   
 class Tape {
  public:
@@ -28,16 +32,17 @@ class Tape {
 
   bool IntroduceString(const std::string& new_string);
 
-  Symbol GetNextSymbol() const;
-  void Advance() { ++head_; }
+  Symbol Read() const;
+  void Write(const Symbol& symbol);
+  void Move(const TapeMovements& movement);
   void Restart() { head_ = 0; tape_ = ""; }
   bool HasSymbolsToRead() const  { return head_ < this->tape_.size(); }
 
-  std::ostream& PrintSymbolsLeft(std::ostream& os) const;
+  std::ostream& PrintTape(std::ostream& os) const;
 
  private:
-  std::string tape_;
-  size_t head_;
+  Symbols tape_;
+  int head_;
   Alphabet alphabet_;
 
   bool IsValid(const std::string& tape) const;
