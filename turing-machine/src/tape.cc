@@ -99,22 +99,22 @@ bool Tape::IsValid(const std::string& tape) const {
  * 
  * @param movement Movement associated to a direction. 
  */
-void Tape::Move(const TapeMovements& movement) {
+void Tape::Move(const TapeMovement& movement) {
   switch (movement) {
-    case LEFT:
+    case turing::TapeMovement::LEFT:
       if (head_ == 0) {
         tape_ = kEmptySymbol + tape_;
       } else {
         --head_;
       }
       break;
-    case RIGHT:
+    case turing::TapeMovement::RIGHT:
       if (head_ == tape_.size() - 1) {
         tape_ += kEmptySymbol;
       }
       ++head_;
       break;
-    case STOP:
+    case turing::TapeMovement::STOP:
       break;
     default:
     break;

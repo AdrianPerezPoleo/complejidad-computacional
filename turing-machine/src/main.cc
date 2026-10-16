@@ -15,6 +15,7 @@
 #include "../include/turing_machine_configuration_reader.h"
 #include "../include/turing_machine_error.h"
 #include "../include/program_options.h"
+#include "../include/transition_table.h"
 
 int main(const int argc, char* argv[]) {
   try {
@@ -33,14 +34,14 @@ int main(const int argc, char* argv[]) {
       tape.PrintTape(std::cout);
       std::cout << std::endl;
       for (int i{0}; i < 10; ++i) {
-        tape.Move(turing::TapeMovements::LEFT);
+        tape.Move(turing::TapeMovement::LEFT);
       }
       tape.Write('0'); 
       std::cout << "-----------\n";
       tape.PrintTape(std::cout);
       std::cout << std::endl;
       for (int i{0}; i < 15; ++i) {
-        tape.Move(turing::TapeMovements::RIGHT);
+        tape.Move(turing::TapeMovement::RIGHT);
       }
       tape.Write('1');;
       std::cout << "-----------\n";

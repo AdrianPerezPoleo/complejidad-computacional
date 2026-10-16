@@ -12,6 +12,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <string>
+
 namespace turing {
   
 using Symbol = char;

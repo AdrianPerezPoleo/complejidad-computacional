@@ -32,8 +32,9 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
   Symbol white_symbol              = ParseSingleToken<Symbol>(file);
   std::set<State> accepting_states = ParseStates(file);
   int number_of_tapes              = ParseSingleToken<int>(file);
-  // TransitionTable transition_table = ParseTransitionTable(file);
+  TransitionTable transition_table = ParseTransitionTable(file, number_of_tapes);
 
+  std::cout << "Tabla de transiciones: " << transition_table;
   if (possible_states.empty()) {
     throw InvalidConfigurationError("La configuracion no contiene estados.");
   }
@@ -58,8 +59,8 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
       initial_state,
       white_symbol,
       accepting_states,
-      number_of_tapes
-      // transition_table
+      number_of_tapes,
+      transition_table
   };
 }
 
@@ -118,7 +119,7 @@ Alphabet TuringMachineConfigurationReader::ParseAlphabet(std::ifstream& file) co
  * @param file Stream of the file being read.
  * @return TransitionTable containing all the transitions of the automaton.
  */
-/*TransitionTable TuringMachineConfigurationReader::ParseTransitionTable(std::ifstream& file) const {
+TransitionTable TuringMachineConfigurationReader::ParseTransitionTable(std::ifstream& file, int number_of_tapes) const {
   std::vector<std::vector<std::string>> transition_matrix;
   std::string line;
 
@@ -134,7 +135,7 @@ Alphabet TuringMachineConfigurationReader::ParseAlphabet(std::ifstream& file) co
     }
   }
 
-  return TransitionTable(transition_matrix);
+  return TransitionTable(number_of_tapes, transition_matrix);
 }
-*/
+
 }

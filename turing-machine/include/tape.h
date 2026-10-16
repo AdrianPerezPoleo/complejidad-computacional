@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "alphabet.h"
@@ -21,9 +22,24 @@
 
 namespace turing {
 
-enum TapeMovements {
+enum class TapeMovement {
   RIGHT, LEFT, STOP
 };
+
+inline TapeMovement StringToTapeMovement(const std::string& str) {
+  static const std::unordered_map<std::string, TapeMovement> movement_map = {
+    {"R",     TapeMovement::RIGHT},
+    {"L",     TapeMovement::LEFT},
+    {"S",     TapeMovement::STOP}
+  };
+
+  auto it = movement_map.find(str);
+  if (it != movement_map.end()) {
+    return it->second;
+  }
+
+  throw std::invalid_argument("Movimiento de cinta invalido: " + str);
+}
   
 class Tape {
  public:
@@ -34,7 +50,7 @@ class Tape {
 
   Symbol Read() const;
   void Write(const Symbol& symbol);
-  void Move(const TapeMovements& movement);
+  void Move(const TapeMovement& movement);
   void Restart() { head_ = 0; tape_ = ""; }
   bool HasSymbolsToRead() const  { return head_ < this->tape_.size(); }
 

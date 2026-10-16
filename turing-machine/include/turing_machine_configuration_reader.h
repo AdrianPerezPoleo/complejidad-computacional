@@ -19,7 +19,7 @@
 #include <iostream>
 
 #include "alphabet.h"
-// #include "transition_table.h"
+ #include "transition_table.h"
 
 namespace turing {
 
@@ -31,7 +31,7 @@ struct TuringMachineConfiguration {
   Symbol white_symbol;
   std::set<State> accepting_states;
   int number_of_tapes;
-//  TransitionTable transition_table;
+  TransitionTable transition_table;
 };
 
 class TuringMachineConfigurationReader {
@@ -45,7 +45,7 @@ class TuringMachineConfigurationReader {
   std::string GetNextValidLine(std::ifstream& file) const;
   std::set<State> ParseStates(std::ifstream& file) const;
   Alphabet ParseAlphabet(std::ifstream& file) const;
-//  TransitionTable ParseTransitionTable(std::ifstream& file) const;
+  TransitionTable ParseTransitionTable(std::ifstream& file, int) const;
 
   template <typename T>
   T ParseSingleToken(std::ifstream& file) const {
