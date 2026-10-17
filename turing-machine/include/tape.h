@@ -26,6 +26,11 @@ enum class TapeMovement {
   RIGHT, LEFT, STOP
 };
 
+struct Movement {
+  Symbol next_symbol;
+  TapeMovement movement;
+};
+
 inline TapeMovement StringToTapeMovement(const std::string& str) {
   static const std::unordered_map<std::string, TapeMovement> movement_map = {
     {"R",     TapeMovement::RIGHT},
@@ -49,8 +54,7 @@ class Tape {
   bool IntroduceString(const std::string& new_string);
 
   Symbol Read() const;
-  void Write(const Symbol& symbol);
-  void Move(const TapeMovement& movement);
+  void ExecuteMovement(const Movement& move);
   void Restart() { head_ = 0; tape_ = ""; }
   bool HasSymbolsToRead() const  { return head_ < this->tape_.size(); }
 
@@ -62,6 +66,8 @@ class Tape {
   Alphabet alphabet_;
 
   bool IsValid(const std::string& tape) const;
+  void Write(const Symbol& symbol);
+  void Move(const TapeMovement& movement);
 };
 
 }

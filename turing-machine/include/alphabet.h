@@ -25,7 +25,8 @@ class Alphabet {
   Alphabet(const std::set<Symbol>& alphabet) : alphabet_{alphabet} { }
 
   bool ContainsSymbol(const Symbol& symbol) const { return this->alphabet_.find(symbol) != this->alphabet_.end(); }
- private:
+
+  private:
   std::set<Symbol> alphabet_;
 };
 

@@ -31,11 +31,6 @@ struct TransitionAntecedent {
   }
 };
 
-struct Movement {
-  Symbol next_symbol;
-  TapeMovement movement;
-};
-
 struct TransitionConsequent {
   int id;
   State next_state;
@@ -66,7 +61,6 @@ class TransitionTable {
 
   void InitializeTable(int, const std::vector<std::vector<std::string>>&);
   TapeMovement ConvertStringToMovement(const std::string&) const;
-
 };
 
 }

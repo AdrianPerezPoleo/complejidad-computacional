@@ -32,6 +32,11 @@ bool Tape::IntroduceString(const std::string& new_string) {
   }
 }
 
+void Tape::ExecuteMovement(const Movement& movement) {
+  this->Write(movement.next_symbol);
+  this->Move(movement.movement);
+}
+
 /**
  * @brief Gets the next symbol in the tape, advancing the head. 
  *        If there is no symbol, the empty symbol is returned.
@@ -39,23 +44,20 @@ bool Tape::IntroduceString(const std::string& new_string) {
  * @return Symbol Read symbol from the tape.
  */
 Symbol Tape::Read() const {
-  try {
-    return this->tape_.at(head_);
-  } catch (const std::out_of_range& exception) {
-    return kEmptySymbol;
+  if (head_ < tape_.size()) {
+    return tape_[head_];
   }
+  return kEmptySymbol;
 }
 
 void Tape::Write(const Symbol& symbol) {
-  if (this->alphabet_.ContainsSymbol(symbol)) {
-    try {
-      this->tape_.at(head_) = symbol;
-    } catch (std::out_of_range& error) {
-      this->tape_ += symbol;
-    }   
-  } else {
-    throw InvalidAlphabetError("Inserting the symbol " + std::to_string(symbol) + " in the tape is not allowed.");
+  if (!this->alphabet_.ContainsSymbol(symbol)) {
+    throw InvalidAlphabetError("Inserting the symbol in the tape is not allowed.");
   }
+  if (head_ >= tape_.size()) {
+    tape_.resize(head_ + 1, kEmptySymbol);
+  }
+  tape_[head_] = symbol;
 }
 
 /**
@@ -65,19 +67,23 @@ void Tape::Write(const Symbol& symbol) {
  * @return std::ostream& 
  */
 std::ostream& Tape::PrintTape(std::ostream& os) const {
-  std::string tape_symbols = "";
-  for (int i{0}; i < (int)tape_.size(); ++i) {
-    tape_symbols += this->tape_.at(i);
+  std::string result = "";
+  size_t max_len = std::max(tape_.size(), static_cast<size_t>(head_ + 1));
+
+  for (size_t i = 0; i < max_len; ++i) {
+    char current_char = (i < tape_.size()) ? tape_[i] : kEmptySymbol;
     if (head_ == i) {
-      tape_symbols += "ñ";
+      result += '[';
+      result += current_char;
+      result += ']';
+    } else {
+      result += current_char;
     }
   }
-  if (tape_symbols == "")
-    tape_symbols = "-";
-  os << tape_symbols;
+
+  os << result;
   return os;
 }
-
 /**
  * @brief Checks if the symbols in the tape are valid.
  * 
@@ -87,7 +93,7 @@ std::ostream& Tape::PrintTape(std::ostream& os) const {
  * @return false otherwise.
  */
 bool Tape::IsValid(const std::string& tape) const {
-  if (tape == std::to_string(kEmptySymbol)) return true;
+  if (tape.size() == 1 && tape[0] == kEmptySymbol) return true;
   for (const auto& symbol : tape) {
     if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }
@@ -109,10 +115,10 @@ void Tape::Move(const TapeMovement& movement) {
       }
       break;
     case turing::TapeMovement::RIGHT:
-      if (head_ == tape_.size() - 1) {
+      ++head_;
+      if (head_ >= tape_.size()) {
         tape_ += kEmptySymbol;
       }
-      ++head_;
       break;
     case turing::TapeMovement::STOP:
       break;

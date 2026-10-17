@@ -24,19 +24,20 @@ class StateManager {
  public:
   StateManager(const State& initial_state, const std::set<State>& possible_states, const std::set<State>& accepting_states)
   : initial_state_{initial_state}, possible_states_{possible_states}, accepting_states_{accepting_states} { 
-    currente_state_ = initial_state;
+    current_state_ = initial_state;
   }
 
-  State GetInitialState() const { return initial_state_; }
+  State GetCurrentState() const { return current_state_; }
   bool IsValidState(const State& state) const { return possible_states_.contains(state); }
 
-  void ChangeToState(const State& next_state) { if (this->IsValidState(next_state)) currente_state_ = next_state; }
-  bool IsInAcceptingState() const { return accepting_states_.contains(currente_state_); }
+  void ChangeToState(const State& next_state) { if (this->IsValidState(next_state)) current_state_ = next_state; }
+  bool IsInAcceptingState() const { return accepting_states_.contains(current_state_); }
+  void Restart() { current_state_ = initial_state_; }
  private:
   State initial_state_;
   std::set<State> possible_states_;
   std::set<State> accepting_states_;
-  State currente_state_;
+  State current_state_;
 };
 
 }

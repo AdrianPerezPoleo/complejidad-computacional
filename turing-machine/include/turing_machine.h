@@ -13,30 +13,30 @@
 #define TURING_MACHINE
 
 #include "turing_machine_configuration_reader.h"
-#include "tape.h"
+#include "multitape.h"
 #include "state_manager.h"
-// #include "transition_table.h"
+#include "transition_table.h"
 
 namespace turing {
 
-class PushdownAutomaton {
+class TuringMachine {
  public:
-  PushdownAutomaton(const TuringMachineConfiguration& configuration, bool trace_mode)
-      : tape_(configuration.tape_alphabet),
-        state_manager_(configuration.initial_state, configuration.possible_states, configuration.accepting_states)
-  //      transition_table_(configuration.transition_table),
+  TuringMachine(const TuringMachineConfiguration& configuration)
+      : tapes_(configuration.number_of_tapes, configuration.tape_alphabet),
+        state_manager_(configuration.initial_state, configuration.possible_states, configuration.accepting_states),
+        transition_table_(configuration.transition_table)
     {
  //   VerifyTransitionTable(configuration);
   }
 
   bool Accepts(const std::string&);
  private:
-  Tape tape_;
+  Multitape tapes_;
   StateManager state_manager_;
-//  TransitionTable transition_table_;
+  TransitionTable transition_table_;
 
 //  void VerifyTransitionTable(const AutomatonConfiguration&) const;
-  void Restart() { tape_.Restart(); }
+  void Restart() { tapes_.Restart(); state_manager_.Restart(); }
 };
 
 }

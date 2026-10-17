@@ -12,6 +12,8 @@ add_executable(
     src/tape.cc
     src/turing_machine_configuration_reader.cc
     src/transition_table.cc
+    src/multitape.cc
+    src/turing_machine.cc
 )
 
 target_link_libraries(
