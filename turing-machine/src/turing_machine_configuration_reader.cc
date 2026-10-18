@@ -34,11 +34,13 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
   int number_of_tapes              = ParseSingleToken<int>(file);
   TransitionTable transition_table = ParseTransitionTable(file, number_of_tapes);
 
+  file.close();
+
   std::cout << "Tabla de transiciones: " << transition_table;
   if (possible_states.empty()) {
     throw InvalidConfigurationError("La configuracion no contiene estados.");
   }
-  if (initial_state.empty() || possible_states.count(initial_state) == 0) {
+  if (initial_state.empty() || !possible_states.contains(initial_state)) {
     throw InvalidConfigurationError("El estado inicial no esta definido en el conjunto de estados.");
   }
   if (!tape_alphabet.ContainsSymbol(white_symbol)) {
@@ -51,7 +53,6 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
     }
   }
 
-  file.close();
   return TuringMachineConfiguration{
       possible_states,
       input_alphabet,

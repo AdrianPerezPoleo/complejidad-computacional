@@ -1,0 +1,26 @@
+# Ejercicio 02
+# Máquina de Turing que 
+# 
+q0 q1 q2 q3 q4 q5 q6 q7 q8
+a b
+. a b 1 0
+q0
+.
+q8
+3
+q0 a . . q0 a R a R . S
+q0 b . . q0 b R . S b R
+q0 . . . q1 . L . S . S
+q1 a . . q1 . L . S . S
+q1 b . . q1 . L . S . S
+q1 . . . q2 . S . L . S
+q2 . . . q3 0 R . S . S
+q2 . a . q4 1 R . L . S
+q3 . . . q5 . R . S . L
+q4 . a . q4 1 R . L . S
+q4 . . . q5 . R . S . L
+q5 . . . q6 0 R . S . S
+q5 . . b q7 1 R . S . L
+q6 . . . q8 . R . S . S
+q7 . . b q7 1 R . S . L
+q7 . . . q8 . S . S . S

@@ -13,7 +13,7 @@
 
 namespace turing {
 
-Transition TransitionTable::GetTransition(const State& current_state, const Symbols& tape_symbols) {
+Transition TransitionTable::GetTransition(const State& current_state, const Symbols& tape_symbols) const {
   if (transition_table_.contains({current_state, tape_symbols})) {
     auto consequent = transition_table_.at({current_state, tape_symbols});
     return {{current_state, tape_symbols}, consequent};
@@ -24,23 +24,28 @@ Transition TransitionTable::GetTransition(const State& current_state, const Symb
 void TransitionTable::InitializeTable(int number_of_tapes, const std::vector<std::vector<std::string>>& table_data_) {
   int transition_id = 1;
   for (const auto& production_data : table_data_ ) {
-    for (int i{0}; i < (number_of_tapes + 1) * 2; ++i) {
+    for (int i{0}; i < 2 + number_of_tapes + 2 * number_of_tapes; ++i) {
       if (production_data[i].empty()) {
-        throw InvalidTransitionError("Transicion mal formada: se esperaban" + std::to_string((number_of_tapes + 1) * 2) + "campos validos.");
+        throw InvalidTransitionError("Transicion mal formada: se esperaban " + std::to_string(2 + number_of_tapes + 2 * number_of_tapes) + " campos validos.");
       }
     }
 
-    TransitionAntecedent antecedent{production_data[0], production_data[1]};
-    State next_state = production_data[2];
+    Symbols antecedent_symbols;
+    for (int i{1}; i <= number_of_tapes; ++i) {
+      antecedent_symbols.push_back(production_data[i].front());
+    }
+    TransitionAntecedent antecedent{production_data[0], antecedent_symbols};
+    State next_state = production_data[number_of_tapes + 1];
     std::vector<Movement> transition_movements;
 
     try {
-      for (int i{3}; i < (number_of_tapes + 1) * 2; i += 2) {
+      for (int i{number_of_tapes + 2}; i < 2 + number_of_tapes + 2 * number_of_tapes; i += 2) {
         Movement new_movement = {production_data[i].front(), StringToTapeMovement(production_data[i + 1])};
         transition_movements.emplace_back(new_movement);
       }
     } catch (std::exception& e) {
-      throw InvalidTransitionError("Transicion mal formada: se esperaban" + std::to_string((number_of_tapes + 1) * 2) + "campos validos.");
+      std::cout << e.what() << std::endl;
+      throw InvalidTransitionError("Transicion mal formada: se esperaban " + std::to_string(2 + number_of_tapes + 2 * number_of_tapes) + " campos validos.");
     }
     TransitionConsequent consequent{transition_id++, next_state, transition_movements};
     this->transition_table_[antecedent] = consequent;

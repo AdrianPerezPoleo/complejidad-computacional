@@ -48,7 +48,7 @@ class TransitionTable {
     InitializeTable(number_of_tapes, table_data);
   }
 
-  Transition GetTransition(const State& current_state, const Symbols& tape_symbols);
+  Transition GetTransition(const State& current_state, const Symbols& tape_symbols) const;
   void Print(std::ostream& os = std::cout) const;
 
   friend std::ostream& operator<<(std::ostream& os, const TransitionTable& table) {
