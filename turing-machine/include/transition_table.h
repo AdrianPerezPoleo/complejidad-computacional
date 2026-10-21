@@ -50,11 +50,6 @@ class TransitionTable {
 
   Transition GetTransition(const State& current_state, const Symbols& tape_symbols) const;
   void Print(std::ostream& os = std::cout) const;
-
-  friend std::ostream& operator<<(std::ostream& os, const TransitionTable& table) {
-    table.Print(os);
-    return os;
-  }
  private:
   int number_of_tapes_;
   std::map<TransitionAntecedent, TransitionConsequent> transition_table_;

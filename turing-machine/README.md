@@ -8,7 +8,7 @@ Este proyecto implementa un simulador orientado a objetos en C++ para una Máqui
 ### Modelo Implementado
 Antes de mostrar el código se desarrolla brevemente en qué consiste el modelo de computación que se ha implementado.
 
-Una máquina de Turing determinista multicinta se define formalmente como una 7-tupla:
+Una máquina de Turing determinista multicinta se define como una 7-tupla:
 
 $$M = (Q, \Sigma, \Gamma, q_0, b, F, \delta)$$
 
@@ -22,6 +22,13 @@ Donde:
 * **$\delta: Q \times \Gamma^k \to Q \times \Gamma^k \times \{L, R, S\}^k$**: Función de transición (donde $k$ es el número de cintas).
 
 **Criterio de Aceptación:** Una cadena $w \in \Sigma^*$ es aceptada por la máquina si, tras procesar la entrada realizando las transiciones correspondientes, la máquina se detiene y su estado actual pertenece al conjunto de estados de aceptación $F$.
+
+> Como podemos ver, de las posibles implementaciones, hemos optado por:
+> - Máquina de Turing con escritura y movimiento simultáneos
+> - Máquina de Turing que incluye la posibilidad de no movimiento (S)
+> - Máquina de Turing con cinta infinita en ambas direcciones.
+>
+>He querido que el modelo sea lo más similar posible al utilizado en clase para los ejercicios.
 
 ## Estructura del Proyecto
 El código sigue la estructura estándar utilizada para desarrollar proyectos con CMake.

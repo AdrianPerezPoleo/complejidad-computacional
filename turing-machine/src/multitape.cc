@@ -13,11 +13,11 @@
 
 namespace turing {
 
-  /**
-   * @brief Assigns the given movements to the chosen tapes.
-   * 
-   * @param movements Vector containing the movements to execute.
-   */
+/**
+ * @brief Assigns the given movements to the chosen tapes.
+ * 
+ * @param movements Vector containing the movements to execute.
+ */
 void Multitape::Move(const std::vector<Movement>& movements) {
   if (movements.size() != multitape_.size()) {
     // Lanzar error de número incorrecto de movimientos
@@ -29,7 +29,6 @@ void Multitape::Move(const std::vector<Movement>& movements) {
 
 /**
  * @brief Restarts the multitape with its initial position.
- * 
  */
 void Multitape::Restart() {
   for (Tape& tape : multitape_) {
@@ -37,15 +36,21 @@ void Multitape::Restart() {
   }
 }
 
-void Multitape::PrintTapes() const {
-  std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+/**
+ * @brief Print the tapes in the multitape.
+ */
+void Multitape::PrintTapes(std::ostream& os) const {
   for (const Tape& tape : multitape_) {
-    tape.PrintTape(std::cout);
-    std::cout << std::endl;
+    tape.PrintTape(os);
+    os << std::endl;
   }
-  std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 }
 
+/**
+ * @brief Returns the symbols pointed by each tape head.
+ * 
+ * @return Symbols that are being pointed by each tape head.
+ */
 Symbols Multitape::GetCurrentSymbols() const {
   Symbols symbols;
   for (const Tape& tape : this->multitape_) {

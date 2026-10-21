@@ -36,7 +36,6 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
 
   file.close();
 
-  std::cout << "Tabla de transiciones: " << transition_table;
   if (possible_states.empty()) {
     throw InvalidConfigurationError("La configuracion no contiene estados.");
   }

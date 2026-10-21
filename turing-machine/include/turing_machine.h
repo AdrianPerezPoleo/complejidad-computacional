@@ -29,7 +29,7 @@ class TuringMachine {
  //   VerifyTransitionTable(configuration);
   }
 
-  bool Accepts(const std::string&);
+  void Process(const std::string&, std::ostream& os);
  private:
   Multitape tapes_;
   StateManager state_manager_;

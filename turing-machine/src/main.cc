@@ -28,11 +28,7 @@ int main(const int argc, char* argv[]) {
       std::cout << "Introduzca una cadena a procesar (O Ctrl + C para salir):\n";
       std::string string_to_verify;
       std::cin >> string_to_verify;
-      if (turing_machine.Accepts(string_to_verify)) {
-        std::cout << "\nAccepted" << std::endl;
-      } else {
-        std::cout << "\nRejected" << std::endl;
-      }
+      turing_machine.Process(string_to_verify, std::cout);
     }
   } catch (const turing::TuringMachineError& error) {
     std::cerr << "Error: " << error.what() << std::endl;

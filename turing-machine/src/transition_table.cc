@@ -61,26 +61,4 @@ std::string MovementToString(TapeMovement movement) {
   }
 }
 
-void TransitionTable::Print(std::ostream& os) const {
-  os << "=== Transition Table (Tapes: " << number_of_tapes_ << ") ===\n";
-
-  for (const auto& [antecedent, consequent] : transition_table_) {
-    os << "δ(" << antecedent.previous_state << ", [";
-    for (size_t i = 0; i < antecedent.tape_symbols.size(); ++i) {
-      os << antecedent.tape_symbols[i] << (i + 1 < antecedent.tape_symbols.size() ? ", " : "");
-    }
-    os << "]) -> ";
-
-    os << "State: " << consequent.next_state << " | Actions: [";
-    for (size_t i = 0; i < consequent.movements.size(); ++i) {
-      os << "(" << consequent.movements[i].next_symbol << ", "
-         << MovementToString(consequent.movements[i].movement) << ")"
-         << (i + 1 < consequent.movements.size() ? ", " : "");
-    }
-    os << "]\n";
-  }
-  
-  os << "========================================\n";
-}
-
 }

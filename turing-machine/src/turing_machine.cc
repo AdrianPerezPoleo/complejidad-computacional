@@ -13,7 +13,12 @@
 
 namespace turing {
 
-bool TuringMachine::Accepts(const std::string& word) {
+/**
+ * @brief Method that process an input string and simulates the behaviour of the Turing Machine.
+ * 
+ * @param word Word to be processed.
+ */
+void TuringMachine::Process(const std::string& word, std::ostream& os) {
   this->Restart();
   this->tapes_.InsertString(word);
 
@@ -31,9 +36,15 @@ bool TuringMachine::Accepts(const std::string& word) {
     }
   }
 
-  tapes_.PrintTapes();
-  if (state_manager_.IsInAcceptingState()) return true;
-  return false;
+  os << "\nContenido de las cintas:\n";
+  tapes_.PrintTapes(os);
+  os << "\n";
+  os << "La MT se ha parado en el estado " << state_manager_.GetCurrentState() << ". ";
+  if (state_manager_.IsInAcceptingState()) {
+    os << "Es un estado de aceptación.\n";
+  } else {
+    os << "No es un estado de aceptación.\n";
+  }
 }
 
 }

@@ -30,7 +30,7 @@ class Multitape {
   Symbols GetCurrentSymbols() const;
   void InsertString(const std::string& new_string) { multitape_[0].IntroduceString(new_string); }
   void Restart();
-  void PrintTapes() const;
+  void PrintTapes(std::ostream&) const;
 
  private:
   std::vector<Tape> multitape_;
