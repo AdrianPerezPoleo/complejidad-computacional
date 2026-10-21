@@ -26,7 +26,7 @@ class TuringMachine {
         state_manager_(configuration.initial_state, configuration.possible_states, configuration.accepting_states),
         transition_table_(configuration.transition_table)
     {
- //   VerifyTransitionTable(configuration);
+    VerifyTransitionTable(configuration);
   }
 
   void Process(const std::string&, std::ostream& os);
@@ -35,7 +35,7 @@ class TuringMachine {
   StateManager state_manager_;
   TransitionTable transition_table_;
 
-//  void VerifyTransitionTable(const AutomatonConfiguration&) const;
+  void VerifyTransitionTable(const TuringMachineConfiguration&) const;
   void Restart() { multitape_.Restart(); state_manager_.Restart(); }
 };
 

@@ -48,6 +48,7 @@ class TransitionTable {
     InitializeTable(number_of_tapes, table_data);
   }
 
+  std::vector<Transition> GetAllTransitions() const;
   Transition GetTransition(const State& current_state, const Symbols& tape_symbols) const;
   void Print(std::ostream& os = std::cout) const;
  private:

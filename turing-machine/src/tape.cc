@@ -32,6 +32,11 @@ bool Tape::IntroduceString(const std::string& new_string) {
   }
 }
 
+/**
+ * @brief Executes a given movement changing the symbol and the position of the head if needed.
+ * 
+ * @param movement Movement to execute.
+ */
 void Tape::ExecuteMovement(const Movement& movement) {
   this->Write(movement.next_symbol);
   this->Move(movement.movement);
@@ -50,6 +55,11 @@ Symbol Tape::Read() const {
   return blank_symbol_;
 }
 
+/**
+ * @brief Inserts a new symbol in the head position of the tape.
+ * 
+ * @param symbol Symbol to write.
+ */
 void Tape::Write(const Symbol& symbol) {
   if (!this->alphabet_.ContainsSymbol(symbol)) {
     throw InvalidAlphabetError("Inserting the symbol in the tape is not allowed.");
@@ -84,6 +94,7 @@ std::ostream& Tape::PrintTape(std::ostream& os) const {
   os << result;
   return os;
 }
+
 /**
  * @brief Checks if the symbols in the tape are valid.
  * 

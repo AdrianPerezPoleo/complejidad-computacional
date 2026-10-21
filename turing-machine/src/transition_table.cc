@@ -57,8 +57,7 @@ void TransitionTable::InitializeTable(int number_of_tapes, const std::vector<std
         transition_movements.emplace_back(new_movement);
       }
     } catch (std::exception& e) {
-      std::cout << e.what() << std::endl;
-      throw InvalidTransitionError("Transicion mal formada: se esperaban " + std::to_string(2 + number_of_tapes + 2 * number_of_tapes) + " campos validos.");
+      throw InvalidTransitionError(e.what());
     }
     TransitionConsequent consequent{transition_id++, next_state, transition_movements};
     this->transition_table_[antecedent] = consequent;
@@ -78,6 +77,19 @@ std::string MovementToString(TapeMovement movement) {
     case TapeMovement::STOP:  return "S";
     default:                  return "?";
   }
+}
+
+/**
+ * @brief Returns all the transitions the transition table has.
+ * 
+ * @return std::vector<Transition> 
+ */
+std::vector<Transition> TransitionTable::GetAllTransitions() const {
+  std::vector<Transition> transitions;
+  for (const auto& [antecedent, consequent] : transition_table_) {
+      transitions.emplace_back(antecedent, consequent);
+  }
+  return transitions;
 }
 
 }

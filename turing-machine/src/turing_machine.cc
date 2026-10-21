@@ -47,4 +47,40 @@ void TuringMachine::Process(const std::string& word, std::ostream& os) {
   }
 }
 
+
+/**
+ * @brief Method that verifies if the transition table can be used by the given automaton.
+ * 
+ * @param configuration Struct containing the automaton configuration.
+ */
+void TuringMachine::VerifyTransitionTable(const TuringMachineConfiguration& configuration) const {
+  for (const auto& transition : transition_table_.GetAllTransitions()) {
+    const auto& antecedent = transition.antecedent;
+    const auto& consequent = transition.consequent;
+
+    if (configuration.possible_states.count(antecedent.previous_state) == 0) {
+      throw InvalidTransitionError("El estado de origen '" + antecedent.previous_state +
+                                   "' de una transicion no pertenece a la MT.");
+    }
+    if (configuration.possible_states.count(consequent.next_state) == 0) {
+      throw InvalidTransitionError("El estado de destino '" + consequent.next_state +
+                                   "' de una transicion no pertenece a la MT.");
+    }
+    for (const Symbol& tape_symbol : antecedent.tape_symbols) {
+      if (tape_symbol != configuration.blank_symbol &&
+          !configuration.tape_alphabet.ContainsSymbol(tape_symbol)) {
+        throw InvalidTransitionError(std::string("El simbolo de cinta '") + tape_symbol +
+                                    "' de una transicion no pertenece al alfabeto de cinta.");
+      }
+    }
+
+    for (const Movement& movement : consequent.movements) {
+      if (!configuration.tape_alphabet.ContainsSymbol(movement.next_symbol)) {
+        throw InvalidTransitionError(std::string("El símbolo '") + movement.next_symbol +
+                                    "' del consecuente de una transicion no pertenece al alfabeto de cinta.");        
+      }
+    }
+  }
+}
+
 }
