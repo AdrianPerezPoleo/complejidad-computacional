@@ -119,3 +119,4 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 ![](doc/MT01.png)
 
 ## Máquina 02
+![](doc/MT02.png)
