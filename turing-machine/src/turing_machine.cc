@@ -20,24 +20,24 @@ namespace turing {
  */
 void TuringMachine::Process(const std::string& word, std::ostream& os) {
   this->Restart();
-  this->tapes_.InsertString(word);
+  this->multitape_.InsertString(word);
 
   Transition next_transition;
 
   while (true) {
     State current_state = state_manager_.GetCurrentState();
-    Symbols current_symbols = tapes_.GetCurrentSymbols();
+    Symbols current_symbols = multitape_.GetCurrentSymbols();
     try {
       auto transition = transition_table_.GetTransition(current_state, current_symbols);
       state_manager_.ChangeToState(transition.consequent.next_state);
-      tapes_.Move(transition.consequent.movements);
+      multitape_.Move(transition.consequent.movements);
     } catch (std::out_of_range&) {
       break;
     }
   }
 
   os << "\nContenido de las cintas:\n";
-  tapes_.PrintTapes(os);
+  multitape_.PrintTapes(os);
   os << "\n";
   os << "La MT se ha parado en el estado " << state_manager_.GetCurrentState() << ". ";
   if (state_manager_.IsInAcceptingState()) {

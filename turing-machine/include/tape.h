@@ -33,9 +33,9 @@ struct Movement {
 
 inline TapeMovement StringToTapeMovement(const std::string& str) {
   static const std::unordered_map<std::string, TapeMovement> movement_map = {
-    {"R",     TapeMovement::RIGHT},
-    {"L",     TapeMovement::LEFT},
-    {"S",     TapeMovement::STOP}
+    {"R", TapeMovement::RIGHT},
+    {"L", TapeMovement::LEFT},
+    {"S", TapeMovement::STOP}
   };
 
   auto it = movement_map.find(str);
@@ -48,7 +48,7 @@ inline TapeMovement StringToTapeMovement(const std::string& str) {
   
 class Tape {
  public:
-  Tape(const Alphabet& input_alphabet) : alphabet_{input_alphabet}, head_{0} { }
+  Tape(const Alphabet& input_alphabet, const Symbol blank_symbol) : alphabet_{input_alphabet}, head_{0}, blank_symbol_{blank_symbol} { }
   Tape(const Tape&) = default;
 
   bool IntroduceString(const std::string& new_string);
@@ -64,6 +64,7 @@ class Tape {
   Symbols tape_;
   int head_;
   Alphabet alphabet_;
+  Symbol blank_symbol_;
 
   bool IsValid(const std::string& tape) const;
   void Write(const Symbol& symbol);

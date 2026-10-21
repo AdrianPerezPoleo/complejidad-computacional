@@ -47,7 +47,7 @@ Symbol Tape::Read() const {
   if (head_ < tape_.size()) {
     return tape_[head_];
   }
-  return kEmptySymbol;
+  return blank_symbol_;
 }
 
 void Tape::Write(const Symbol& symbol) {
@@ -55,7 +55,7 @@ void Tape::Write(const Symbol& symbol) {
     throw InvalidAlphabetError("Inserting the symbol in the tape is not allowed.");
   }
   if (head_ >= tape_.size()) {
-    tape_.resize(head_ + 1, kEmptySymbol);
+    tape_.resize(head_ + 1, blank_symbol_);
   }
   tape_[head_] = symbol;
 }
@@ -71,7 +71,7 @@ std::ostream& Tape::PrintTape(std::ostream& os) const {
   size_t max_len = std::max(tape_.size(), static_cast<size_t>(head_ + 1));
 
   for (size_t i = 0; i < max_len; ++i) {
-    char current_char = (i < tape_.size()) ? tape_[i] : kEmptySymbol;
+    char current_char = (i < tape_.size()) ? tape_[i] : blank_symbol_;
     if (head_ == i) {
       result += '[';
       result += current_char;
@@ -93,7 +93,7 @@ std::ostream& Tape::PrintTape(std::ostream& os) const {
  * @return false otherwise.
  */
 bool Tape::IsValid(const std::string& tape) const {
-  if (tape.size() == 1 && tape[0] == kEmptySymbol) return true;
+  if (tape.size() == 1 && tape[0] == blank_symbol_) return true;
   for (const auto& symbol : tape) {
     if (!this->alphabet_.ContainsSymbol(symbol)) return false;
   }
@@ -109,7 +109,7 @@ void Tape::Move(const TapeMovement& movement) {
   switch (movement) {
     case turing::TapeMovement::LEFT:
       if (head_ == 0) {
-        tape_ = kEmptySymbol + tape_;
+        tape_ = blank_symbol_ + tape_;
       } else {
         --head_;
       }
@@ -117,7 +117,7 @@ void Tape::Move(const TapeMovement& movement) {
     case turing::TapeMovement::RIGHT:
       ++head_;
       if (head_ >= tape_.size()) {
-        tape_ += kEmptySymbol;
+        tape_ += blank_symbol_;
       }
       break;
     case turing::TapeMovement::STOP:

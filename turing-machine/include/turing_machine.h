@@ -22,7 +22,7 @@ namespace turing {
 class TuringMachine {
  public:
   TuringMachine(const TuringMachineConfiguration& configuration)
-      : tapes_(configuration.number_of_tapes, configuration.tape_alphabet),
+      : multitape_(configuration.number_of_tapes, configuration.tape_alphabet, configuration.blank_symbol),
         state_manager_(configuration.initial_state, configuration.possible_states, configuration.accepting_states),
         transition_table_(configuration.transition_table)
     {
@@ -31,12 +31,12 @@ class TuringMachine {
 
   void Process(const std::string&, std::ostream& os);
  private:
-  Multitape tapes_;
+  Multitape multitape_;
   StateManager state_manager_;
   TransitionTable transition_table_;
 
 //  void VerifyTransitionTable(const AutomatonConfiguration&) const;
-  void Restart() { tapes_.Restart(); state_manager_.Restart(); }
+  void Restart() { multitape_.Restart(); state_manager_.Restart(); }
 };
 
 }

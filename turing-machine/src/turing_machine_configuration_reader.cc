@@ -29,7 +29,7 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
   Alphabet input_alphabet           = ParseAlphabet(file);
   Alphabet tape_alphabet          = ParseAlphabet(file);
   State initial_state              = ParseSingleToken<State>(file);
-  Symbol white_symbol              = ParseSingleToken<Symbol>(file);
+  Symbol blank_symbol              = ParseSingleToken<Symbol>(file);
   std::set<State> accepting_states = ParseStates(file);
   int number_of_tapes              = ParseSingleToken<int>(file);
   TransitionTable transition_table = ParseTransitionTable(file, number_of_tapes);
@@ -42,7 +42,7 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
   if (initial_state.empty() || !possible_states.contains(initial_state)) {
     throw InvalidConfigurationError("El estado inicial no esta definido en el conjunto de estados.");
   }
-  if (!tape_alphabet.ContainsSymbol(white_symbol)) {
+  if (!tape_alphabet.ContainsSymbol(blank_symbol)) {
     throw InvalidConfigurationError("El simbolo blanco no se encuentra en el alfabeto de cinta.");
   }
 
@@ -57,7 +57,7 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
       input_alphabet,
       tape_alphabet,
       initial_state,
-      white_symbol,
+      blank_symbol,
       accepting_states,
       number_of_tapes,
       transition_table

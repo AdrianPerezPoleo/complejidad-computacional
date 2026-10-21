@@ -20,7 +20,6 @@ using Symbol = char;
 using Symbols = std::string;
 using State = std::string;
 
-constexpr Symbol kEmptySymbol = '.';
 }
 
 #endif

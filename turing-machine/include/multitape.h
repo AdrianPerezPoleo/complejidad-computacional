@@ -20,9 +20,9 @@ namespace turing {
 
 class Multitape {
  public:
-  Multitape(int number_of_tapes, const Alphabet& alphabet) {
+  Multitape(int number_of_tapes, const Alphabet& alphabet, const Symbol& blank_symbol) {
     for (int i{0}; i < number_of_tapes; ++i) {
-      multitape_.emplace_back(alphabet);
+      multitape_.emplace_back(alphabet, blank_symbol);
     }
   }
 

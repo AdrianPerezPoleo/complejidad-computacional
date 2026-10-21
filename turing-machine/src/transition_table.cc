@@ -13,6 +13,13 @@
 
 namespace turing {
 
+/**
+ * @brief Returns the transition that corresponds to the given current state.
+ * 
+ * @param current_state State where the Turing machine is after obtaining the transition.
+ * @param tape_symbols Symbols pointed by the tape heads.
+ * @return Transition 
+ */
 Transition TransitionTable::GetTransition(const State& current_state, const Symbols& tape_symbols) const {
   if (transition_table_.contains({current_state, tape_symbols})) {
     auto consequent = transition_table_.at({current_state, tape_symbols});
@@ -21,6 +28,12 @@ Transition TransitionTable::GetTransition(const State& current_state, const Symb
   throw std::out_of_range("Error: No existe una transicion definida para el estado y simbolos dados.");
 }
 
+/**
+ * @brief Stores the information ot eh input file into the Transition table.
+ * 
+ * @param number_of_tapes 
+ * @param table_data_ 
+ */
 void TransitionTable::InitializeTable(int number_of_tapes, const std::vector<std::vector<std::string>>& table_data_) {
   int transition_id = 1;
   for (const auto& production_data : table_data_ ) {
@@ -52,6 +65,12 @@ void TransitionTable::InitializeTable(int number_of_tapes, const std::vector<std
   }
 }
 
+/**
+ * @brief Given a tape movement, returns its name.
+ * 
+ * @param movement Movement whose name will be returned.
+ * @return std::string 
+ */
 std::string MovementToString(TapeMovement movement) {
   switch (movement) {
     case TapeMovement::RIGHT: return "R";

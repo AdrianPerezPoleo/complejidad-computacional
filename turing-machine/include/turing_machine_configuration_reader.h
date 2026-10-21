@@ -28,7 +28,7 @@ struct TuringMachineConfiguration {
   Alphabet input_alphabet;
   Alphabet tape_alphabet;
   State initial_state;
-  Symbol white_symbol;
+  Symbol blank_symbol;
   std::set<State> accepting_states;
   int number_of_tapes;
   TransitionTable transition_table;
