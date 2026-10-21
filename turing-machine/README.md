@@ -118,5 +118,23 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 ### Máquina 01
 ![](doc/MT01.png)
 
+A continuación, se muestra brevemente el sentido de cada estado.
+- `q0`: Lectura de a's y copia en la cinta 2.
+- `q1`: Lectura de b's y copia en la cinta 3.
+- `q2`: Estado de inanición por entrada que tiene los caracteres en orden incorrecto o la cadena vacía.
+- `q3`: Comparación del número de a's y b's.
+- `q4`: Estado de aceptación. Se llega cuando hay tantas a's como b's o más a's que b's.
+
 ## Máquina 02
 ![](doc/MT02.png)
+
+A continuación, se muestra brevemente el sentido de cada estado.
+- `q0`: Copia de las a's en la cinta 2 y de las b's en la cinta 3.
+- `q1`: Limpieza de la cinta 1 (*se puede omitir*)
+- `q2`: Recuento de a's.
+- `q3`: No hay a's.
+- `q4`: Sí hay a's.
+- `q5`: Recuento de b's.
+- `q6`: No hay b's.
+- `q7`: Sí hay b's.
+- `q8`: Estado de aceptación. La cinta 1 contiene el números de a's, un símbolo blanco y el número de b's.

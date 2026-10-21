@@ -6,7 +6,7 @@ a b
 . a b
 q0
 .
-q4
+q7
 3
 q0 a . . q0 a R a R . S
 q0 b . . q1 b R . S b R
