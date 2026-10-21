@@ -106,7 +106,6 @@ q2                      # conjunto de estados de aceptación F
 q0 0 q1 0 R             # transiciones: estado_actual, [simbolos_leidos], estado_siguiente, [simbolos_escritos, movimientos]
 ...                     # cada una de las transiciones en una línea distinta
 ```
-*Nota: Para máquinas multicinta, la transición incluye el símbolo a leer, el símbolo a escribir y el movimiento por cada cinta. (Ejemplo: `estado_actual lee_c1 lee_c2 estado_sgte escribe_c1 mueve_c1 escribe_c2 mueve_c2`)*
 
 ## Arquitectura del Software
 El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
@@ -126,22 +125,18 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 ![](doc/MT01.png)
 
 A continuación, se muestra brevemente el sentido de cada estado.
-- `q0`: Lectura de a's y copia en la cinta 2.
-- `q1`: Lectura de b's y copia en la cinta 3.
-- `q2`: Estado de inanición por entrada que tiene los caracteres en orden incorrecto o la cadena vacía.
-- `q3`: Comparación del número de a's y b's.
-- `q4`: Estado de aceptación. Se llega cuando hay tantas a's como b's o más a's que b's.
+- `q0`: Lee las a's y las copia en la cinta 2.
+- `q1`: Lee las b's y las copia en la cinta 3.
+- `q2`: Va recorriendo a la vez las cintas 2 y 3, comparando el número de a's y b's.
+- `q3`: Estado de aceptación. Se llega cuando hay tantas a's como b's o más a's que b's.
 
 ## Máquina 02
 ![](doc/MT02.png)
 
 A continuación, se muestra brevemente el sentido de cada estado.
-- `q0`: Copia de las a's en la cinta 2 y de las b's en la cinta 3.
-- `q1`: Limpieza de la cinta 1 (*se puede omitir*)
-- `q2`: Recuento de a's.
-- `q3`: No hay a's.
-- `q4`: Sí hay a's.
-- `q5`: Recuento de b's.
-- `q6`: No hay b's.
-- `q7`: Sí hay b's.
-- `q8`: Estado de aceptación. La cinta 1 contiene el números de a's, un símbolo blanco y el número de b's.
+- `q0`: Copia las a's en la cinta 2 y las b's en la cinta 3. Además, elimina el contenido de la cinta de entrada (cinta 1).
+- `q1`: Este estado indica que ya se han almacenado las a's y b's en sus respectivas cintas. La cabeza de la cinta 2 apunta a la última a introducida (si la hay). Si todo es vacío (no hay a's) se escribe un 0 en la cinta 1, en caso contrario se escribe un 1.
+- `q2`: Mientras hayan a's, se escriben 1's en la cinta 1 (de derecha a izquierda). Tras el último 1 (la última a) se escribe un símbolo vacío.
+- `q3`: De forma similar al estado `q1`, con el cabezal de la cinta 3 en la última b introducida, se añade un 1 si la hay o un 0 si no hubieron b's en la entrada.
+- `q4`: Mientras hayan b's guardadas, se guardan 1's en la cinta 1 (de derecha a izquierda).
+- `q5`: Estado de aceptación. Todos los símbolos han sido leídos y la cabeza apunta al primer símbolo de la cinta 1 (que fue la de entrada y ahora contiene la solución).
