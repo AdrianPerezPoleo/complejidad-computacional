@@ -58,6 +58,10 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
     }
   }
 
+  if (input_alphabet.ContainsSymbol(blank_symbol)) {
+    throw InvalidConfigurationError("El alfabeto de entrada no puede contener la cadena vacía.");
+  }
+
   return TuringMachineConfiguration{
       possible_states,
       input_alphabet,
