@@ -126,6 +126,9 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 ### Máquina 01
 ![](doc/MT01.png)
 
+- Imagen: `doc/MT01.png`
+- Fichero de configuración: `examples/Tarea1.txt`
+
 A continuación, se muestra brevemente el sentido de cada estado.
 - `q0`: Lee las a's y las copia en la cinta 2.
 - `q1`: Lee las b's y las copia en la cinta 3.
@@ -134,6 +137,9 @@ A continuación, se muestra brevemente el sentido de cada estado.
 
 ## Máquina 02
 ![](doc/MT02.png)
+
+- Imagen: `doc/MT02.png`
+- Fichero de configuración: `examples/Tarea2.txt`
 
 A continuación, se muestra brevemente el sentido de cada estado.
 - `q0`: Copia las a's en la cinta 2 y las b's en la cinta 3. Además, elimina el contenido de la cinta de entrada (cinta 1).
