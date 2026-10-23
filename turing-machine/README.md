@@ -113,7 +113,7 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 ![](doc/class_diagram.png)
 
 ### Descripción de los principales elementos:
-- `TuringMachine`: Clase principal que simula el comportamiento del autómata, coordinando las cintas, los estados y las transiciones.
+- `TuringMachine`: Clase principal que simula el comportamiento de la máquina, coordinando las cintas, los estados y las transiciones.
 - `Multitape`: Clase que gestiona múltiples instancias de la cinta (`Tape`), permitiendo simulaciones de Máquinas de Turing multicinta.
 - `Tape`: Abstracción de una cinta infinita de la máquina. Implementa la lectura, escritura y el movimiento del cabezal (`L`, `R`, `S`).
 - `StateManager`: Clase encargada de almacenar y actualizar el estado actual de la máquina, validando si se encuentra en un estado de aceptación.
@@ -130,10 +130,11 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 - Fichero de configuración: `examples/Tarea1.txt`
 
 A continuación, se muestra brevemente el sentido de cada estado.
-- `q0`: Lee las a's y las copia en la cinta 2.
-- `q1`: Lee las b's y las copia en la cinta 3.
-- `q2`: Va recorriendo a la vez las cintas 2 y 3, comparando el número de a's y b's.
-- `q3`: Estado de aceptación. Se llega cuando hay tantas a's como b's o más a's que b's.
+- `q0`: No se ha leído ninguna a. Debe haber al menos una a para continuar procesando la cadena.
+- `q1`: Lee las a's y las copia en la cinta 2.
+- `q2`: Lee las b's y las copia en la cinta 3.
+- `q3`: Va recorriendo a la vez las cintas 2 y 3, comparando el número de a's y b's.
+- `q4`: Estado de aceptación. Se llega cuando hay tantas a's como b's o más a's que b's.
 
 ## Máquina 02
 ![](doc/MT02.png)
