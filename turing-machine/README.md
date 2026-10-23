@@ -110,6 +110,8 @@ q0 0 q1 0 R             # transiciones: estado_actual, [simbolos_leidos], estado
 ## Arquitectura del Software
 El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 
+![](doc/class_diagram.png)
+
 ### Descripción de los principales elementos:
 - `TuringMachine`: Clase principal que simula el comportamiento del autómata, coordinando las cintas, los estados y las transiciones.
 - `Multitape`: Clase que gestiona múltiples instancias de la cinta (`Tape`), permitiendo simulaciones de Máquinas de Turing multicinta.
