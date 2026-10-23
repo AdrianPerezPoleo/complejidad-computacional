@@ -52,6 +52,12 @@ TuringMachineConfiguration TuringMachineConfigurationReader::ReadConfiguration()
     }
   }
 
+  for (const Symbol& symbol : input_alphabet) {
+    if (!tape_alphabet.ContainsSymbol(symbol)) {
+      throw InvalidConfigurationError("El símbolo del alfabeto de entrada " + std::string(1, symbol) + " no está en el alfabeto de cinta.");
+    }
+  }
+
   return TuringMachineConfiguration{
       possible_states,
       input_alphabet,
