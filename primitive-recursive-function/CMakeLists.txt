@@ -11,7 +11,3 @@ add_executable(
     src/program_options.cc
     src/primitive_recursive_function.cc
 )
-
-target_link_libraries(
-    power
-)

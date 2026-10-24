@@ -39,8 +39,14 @@ void PrintUsageAndExit(const std::string& program_name, const std::string& error
  */
 void ParseBase(int& i, int argc, char* argv[], ProgramOptions& options, bool& base_found) {
   if (i + 1 < argc) {
-    options.base = std::stoi(argv[++i]);
-    base_found = true;
+    try {
+      options.base = std::stoi(argv[++i]);
+      base_found = true;
+    } catch (const std::invalid_argument& e) {
+      PrintUsageAndExit(argv[0], "El valor introducido en -x no es un número válido.");
+    } catch (const std::out_of_range& e) {
+      PrintUsageAndExit(argv[0], "El número introducido en -x es demasiado grande.");
+    }
   } else {
     PrintUsageAndExit(argv[0], "La opción -x requiere un número válido.");
   }
@@ -57,8 +63,14 @@ void ParseBase(int& i, int argc, char* argv[], ProgramOptions& options, bool& ba
  */
 void ParseExponent(int& i, int argc, char* argv[], ProgramOptions& options, bool& exponent_found) {
   if (i + 1 < argc) {
-    options.exponent = std::stoi(argv[++i]);
-    exponent_found = true;
+    try {
+      options.exponent = std::stoi(argv[++i]);
+      exponent_found = true;
+    } catch (const std::invalid_argument& e) {
+      PrintUsageAndExit(argv[0], "El valor introducido en -x no es un número válido.");
+    } catch (const std::out_of_range& e) {
+      PrintUsageAndExit(argv[0], "El número introducido en -x es demasiado grande.");
+    }
   } else {
     PrintUsageAndExit(argv[0], "La opción -y requiere un número válido.");
   }
@@ -96,11 +108,11 @@ ProgramOptions ProcessParameters(const int argc, char* argv[]) {
     PrintUsageAndExit(argv[0], "Falta el argumento obligatorio -y.");
   }
 
-  if (options.base < 0 || options.base % 1 != 0) {
+  if (options.base < 0) {
     PrintUsageAndExit(argv[0], "La base debe ser un número natural.");
   }
 
-  if (options.exponent < 0 || options.exponent % 1 != 0) {
+  if (options.exponent < 0) {
     PrintUsageAndExit(argv[0], "El exponente debe ser un número natural.");
   }
 

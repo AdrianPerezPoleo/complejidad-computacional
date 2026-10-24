@@ -1,5 +1,5 @@
 /**
- * @file add.h
+ * @file basic_functions.h
  * @author Adrián Pérez Poleo (alu0101635224@ull.edu.es)
  * @brief Definition of the Zero and Succesor Primitive Recursive Functions.
  * @version 1.0
