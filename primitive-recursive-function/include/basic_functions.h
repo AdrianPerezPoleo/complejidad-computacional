@@ -12,22 +12,45 @@
 #ifndef BASIC_FUNCTIONS_H
 #define BASIC_FUNCTIONS_H
 
-#include "primitive_recursive_function.h"
+#include <cstdarg>
+#include <stdexcept>
 
-class Zero : public PrimitiveRecursiveFunction {
+#include "arity_functions.h"
+
+class Zero : public UnaryPrimitiveFunction {
  public:
-  int operator()(int x) const {
+  int evaluate(int x) const override {
     AddFunctionCall();
     return 0;
   }
 };
 
-class Successor : public PrimitiveRecursiveFunction {
+class Successor : public UnaryPrimitiveFunction {
  public:
-  int operator()(int x) const {
+  int evaluate(int x) const override {
     AddFunctionCall();
     return x + 1;
   }
+};
+
+class Projection : public PrimitiveRecursiveFunction {
+ public:
+  Projection(int i, int n) : i_(i), n_(n) {
+    if (i_ < 1 || i_ > n_) throw PrimitiveRecursiveFunctionError("Indice de proyeccion invalido.");
+  }
+
+  int operator()(const std::vector<int>& operands) const override final {
+    AddFunctionCall();
+    if (operands.size() != n_) {
+      throw WrongArity("La proyeccion P_" + std::to_string(i_) + "^" + std::to_string(n_) + 
+                       " esperaba " + std::to_string(n_) + " argumentos.");
+    }
+    return operands[i_ - 1]; 
+  }
+
+ private:
+  int n_;
+  int i_;
 };
 
 #endif

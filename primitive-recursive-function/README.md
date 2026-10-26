@@ -99,11 +99,9 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 
 ### Descripción de los principales elementos:
 
-* `PRFunction`: Clase abstracta base de la que heredan todas las operaciones. Gestiona el contador estático (`call_count_`) para registrar el número de llamadas.
-* `Zero` y `Successor`: Clases que implementan las funciones primitivas básica.
-* `Add`: Clase que implementa la suma recursiva.
-* `Multiply`: Clase que implementa el producto.
-* `Power`: Clase principal que se instancia en el programa encargada de evaluar la potencia.
-* `ProgramOptions`: Módulo encargado de verificar que los datos de entrada son válidos.
-
-```
+* **`PrimitiveRecursiveFunction`**: Clase abstracta que define la interfaz y gestiona el contador de llamadas (`call_count_`).
+* **`UnaryPrimitiveFunction` y `BinaryPrimitiveFunction**`: Clases abstractas intermedias que validan la aridad.
+* **`Projection`**: Clase que implementa la función proyección, validando su aridad.
+* **`Zero` y `Successor**`: Clases que implementan las funciones primitivas básicas.
+* **`Add`, `Multiply` y `Power**`: Clases que implementan la suma, el producto y la potencia de forma recursiva.
+* **`ProgramOptions`**: Estructura encargada de procesar y verificar que los argumentos de entrada son válidos.

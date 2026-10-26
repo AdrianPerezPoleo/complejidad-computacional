@@ -12,9 +12,13 @@
 #ifndef PRIMITIVE_RECURSIVE_FUNCTION
 #define PRIMITIVE_RECURSIVE_FUNCTION
 
+#include <vector>
+
 class PrimitiveRecursiveFunction {
  public:
   virtual ~PrimitiveRecursiveFunction() = default;
+
+  virtual int operator()(const std::vector<int>& operands) const = 0;
 
   static unsigned long GetCallCount() { return call_count_; }
   static void ResetCallCount() { call_count_ = 0; }

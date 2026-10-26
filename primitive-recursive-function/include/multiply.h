@@ -16,12 +16,12 @@
 #include "basic_functions.h"
 #include "add.h"
 
-class Multiply : public PrimitiveRecursiveFunction {
+class Multiply : public BinaryPrimitiveFunction {
  public:
-  int operator()(int x, int y) const {
+  int evaluate(int x, int y) const override {
     AddFunctionCall();
     if (y == 0) return Zero()(x);
-    return Add()(x, operator()(x, y - 1));
+    return Add()(Projection(1, 3)({x, y, this->operator()(x, y - 1)}), Projection(3, 3)({x, y, this->operator()(x, y - 1)}));
   }
 };
 

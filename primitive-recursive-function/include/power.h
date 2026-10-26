@@ -11,16 +11,17 @@
 #ifndef POWER_H
 #define POWER_H
 
-#include "primitive_recursive_function.h"
+#include "arity_functions.h"
 #include "basic_functions.h"
 #include "multiply.h"
 
-class Power : public PrimitiveRecursiveFunction {
+class Power : public BinaryPrimitiveFunction {
  public:
-  int operator()(int x, int y) const {
+  int evaluate(int x, int y) const override {
     AddFunctionCall();
     if (y == 0) return Successor()(Zero()(x));
-    return Multiply()(x, this->operator()(x, y - 1));
+    std::vector<int> parameters = {x, y, this->operator()(x, y - 1)};
+    return Multiply()(Projection(1, 3)(parameters), Projection(3, 3)(parameters));
   }
 };
 

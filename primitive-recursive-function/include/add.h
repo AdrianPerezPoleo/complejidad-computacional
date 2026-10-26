@@ -12,15 +12,18 @@
 #ifndef ADD_H
 #define ADD_H
 
-#include "primitive_recursive_function.h"
+#include "arity_functions.h"
 #include "basic_functions.h"
 
-class Add : public PrimitiveRecursiveFunction {
+class Add : public BinaryPrimitiveFunction {
  public:
-  int operator()(int x, int y) const {
+  int evaluate(int x, int y) const override {
     AddFunctionCall();
-    if (y == 0) return x;
-    return Successor()(this->operator()(x, y - 1));
+    if (y == 0) return Projection(1, 1)({x});
+
+    std::vector<int> parameters = {x, y, this->operator()(x, y - 1)};
+
+    return Successor()(Projection(3, 3)(parameters));
   }
 };
 
