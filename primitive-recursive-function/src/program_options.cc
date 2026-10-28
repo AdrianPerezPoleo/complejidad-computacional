@@ -40,7 +40,11 @@ void PrintUsageAndExit(const std::string& program_name, const std::string& error
 void ParseBase(int& i, int argc, char* argv[], ProgramOptions& options, bool& base_found) {
   if (i + 1 < argc) {
     try {
-      options.base = std::stoi(argv[++i]);
+      std::string argument = argv[++i];
+      if (argument.find('.') != std::string::npos || argument.find(',') != std::string::npos) {
+        PrintUsageAndExit(argv[0], "El valor introducido en -x no puede ser un número decimal.");
+      }
+      options.base = std::stoi(argument);
       base_found = true;
     } catch (const std::invalid_argument& e) {
       PrintUsageAndExit(argv[0], "El valor introducido en -x no es un número válido.");
@@ -64,7 +68,11 @@ void ParseBase(int& i, int argc, char* argv[], ProgramOptions& options, bool& ba
 void ParseExponent(int& i, int argc, char* argv[], ProgramOptions& options, bool& exponent_found) {
   if (i + 1 < argc) {
     try {
-      options.exponent = std::stoi(argv[++i]);
+      std::string argument = argv[++i];
+      if (argument.find('.') != std::string::npos || argument.find(',') != std::string::npos) {
+        PrintUsageAndExit(argv[0], "El valor introducido en -x no puede ser un número decimal.");
+      }
+      options.exponent = std::stoi(argument);
       exponent_found = true;
     } catch (const std::invalid_argument& e) {
       PrintUsageAndExit(argv[0], "El valor introducido en -x no es un número válido.");

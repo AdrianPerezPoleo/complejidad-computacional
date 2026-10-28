@@ -22,7 +22,6 @@ class Add : public BinaryPrimitiveFunction {
     if (y == 0) return Projection(1, 1)({x});
 
     std::vector<int> parameters = {x, y, this->operator()(x, y - 1)};
-
     return Successor()(Projection(3, 3)(parameters));
   }
 };

@@ -21,7 +21,8 @@ class Multiply : public BinaryPrimitiveFunction {
   int evaluate(int x, int y) const override {
     AddFunctionCall();
     if (y == 0) return Zero()(x);
-    return Add()(Projection(1, 3)({x, y, this->operator()(x, y - 1)}), Projection(3, 3)({x, y, this->operator()(x, y - 1)}));
+    std::vector<int> parameters = {x, y, this->operator()(x, y - 1)};
+    return Add()(Projection(1, 3)(parameters), Projection(3, 3)(parameters));
   }
 };
 
