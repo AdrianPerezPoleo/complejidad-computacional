@@ -29,21 +29,24 @@ Al finalizar su ejecución, el programa muestra por pantalla tanto el resultado 
 El código sigue la estructura estándar utilizada para desarrollar proyectos con CMake.
 
 ```bash
-primitive-recursive-functions/
+.
 ├── CMakeLists.txt
 ├── README.md
+├── doc
+│   └── class_diagram.png
 ├── include
 │   ├── add.h
+│   ├── arity_functions.h
 │   ├── basic_functions.h
 │   ├── multiply.h
 │   ├── power.h
 │   ├── primitive_recursive_function.h
+│   ├── primitive_recursive_function_error.h
 │   └── program_options.h
 └── src
     ├── main.cc
     ├── primitive_recursive_function.cc
     └── program_options.cc
-
 ```
 
 ## Compilación y Ejecución
@@ -64,7 +67,6 @@ cmake ..
 
 # Compilar el proyecto
 make
-
 ```
 
 De esta manera se generará el ejecutable `power` dentro del directorio `build/`.
@@ -80,15 +82,13 @@ El programa debe recibir dos parámetros en la línea de comandos correspondient
 
 ```bash
 ./power -x 2 -y 10
-
 ```
 
 **Salida:**
 
 ```text
 Resultado: 1024
-Número de llamadas a funciones: 699083
-
+Número de llamadas: 1050674
 ```
 
 ## Arquitectura del Software
@@ -100,8 +100,8 @@ El diseño del programa sigue el paradigma de Programación Orientada a Objetos.
 ### Descripción de los principales elementos:
 
 * **`PrimitiveRecursiveFunction`**: Clase abstracta que define la interfaz y gestiona el contador de llamadas (`call_count_`).
-* **`UnaryPrimitiveFunction` y `BinaryPrimitiveFunction**`: Clases abstractas intermedias que validan la aridad.
+* **`UnaryPrimitiveFunction`** y **`BinaryPrimitiveFunction`**: Clases abstractas intermedias que validan la aridad.
 * **`Projection`**: Clase que implementa la función proyección, validando su aridad.
-* **`Zero` y `Successor**`: Clases que implementan las funciones primitivas básicas.
-* **`Add`, `Multiply` y `Power**`: Clases que implementan la suma, el producto y la potencia de forma recursiva.
+* **`Zero`** y **`Successor`**: Clases que implementan las funciones primitivas básicas.
+* **`Add`**, **`Multiply`** y **`Power`**: Clases que implementan la suma, el producto y la potencia de forma recursiva.
 * **`ProgramOptions`**: Estructura encargada de procesar y verificar que los argumentos de entrada son válidos.

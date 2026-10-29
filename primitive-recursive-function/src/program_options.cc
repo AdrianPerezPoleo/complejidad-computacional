@@ -70,14 +70,14 @@ void ParseExponent(int& i, int argc, char* argv[], ProgramOptions& options, bool
     try {
       std::string argument = argv[++i];
       if (argument.find('.') != std::string::npos || argument.find(',') != std::string::npos) {
-        PrintUsageAndExit(argv[0], "El valor introducido en -x no puede ser un número decimal.");
+        PrintUsageAndExit(argv[0], "El valor introducido en -y no puede ser un número decimal.");
       }
       options.exponent = std::stoi(argument);
       exponent_found = true;
     } catch (const std::invalid_argument& e) {
-      PrintUsageAndExit(argv[0], "El valor introducido en -x no es un número válido.");
+      PrintUsageAndExit(argv[0], "El valor introducido en -y no es un número válido.");
     } catch (const std::out_of_range& e) {
-      PrintUsageAndExit(argv[0], "El número introducido en -x es demasiado grande.");
+      PrintUsageAndExit(argv[0], "El número introducido en -y es demasiado grande.");
     }
   } else {
     PrintUsageAndExit(argv[0], "La opción -y requiere un número válido.");
